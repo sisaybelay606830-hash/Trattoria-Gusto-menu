@@ -25,7 +25,11 @@ class Session
             return;
         }
         $cfg = require dirname(__DIR__, 2) . '/config/app.php';
-        session_name($cfg['session']['name'] ?? 'kaldis_session');
+        $sessionName = preg_replace('/[^a-zA-Z0-9_-]/', '', (string)($cfg['session']['name'] ?? 'trattoria_gusto_session'));
+        if (empty($sessionName) || is_numeric($sessionName)) {
+            $sessionName = 'trattoria_gusto_session';
+        }
+        session_name($sessionName);
         session_set_cookie_params([
             'lifetime' => 0,            // Browser-session cookie
             'path'     => '/',

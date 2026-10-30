@@ -37,7 +37,7 @@ class Router
         $rawUri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
 
         // Strip the sub-directory prefix so that routes are relative.
-        // Supports running under /kaldis-menu/public/, /kaldis-menu/, or root VirtualHost.
+        // Supports running under /Trattoria-Gusto-menu/public/, /Trattoria-Gusto-menu/, or root VirtualHost.
         $scriptDir = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? '/'), '/\\');
         $path = $rawUri;
 

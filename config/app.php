@@ -8,15 +8,15 @@ declare(strict_types=1);
 use App\Helpers\Env;
 
 return [
-    'name'    => Env::getString('APP_NAME', 'Kaldis Coffee Digital Menu'),
+    'name'    => Env::getString('APP_NAME', 'Trattoria-Gusto-menu Digital Menu'),
     'env'     => Env::getString('APP_ENV', 'production'),
     'debug'   => Env::getBool('APP_DEBUG', false),
-    'url'     => Env::getString('APP_URL', 'http://localhost/kaldis-menu/public'),
+    'url'     => Env::getString('APP_URL', 'http://localhost/Trattoria-Gusto-menu/public'),
     'secret'  => Env::getString('APP_SECRET', ''),
 
     'session' => [
         'lifetime' => Env::getInt('SESSION_LIFETIME', 7200),
-        'name'     => Env::getString('SESSION_NAME', 'kaldis_session'),
+        'name'     => Env::getString('SESSION_NAME', 'Trattoria-Gusto-menu_session'),
     ],
 
     'security' => [
@@ -33,7 +33,7 @@ return [
     ],
 
     'qr' => [
-        'base_url'   => Env::getString('QR_PUBLIC_BASE_URL', 'http://localhost/kaldis-menu/public/menu'),
+        'base_url'   => Env::getString('QR_PUBLIC_BASE_URL', 'http://localhost/Trattoria-Gusto-menu/public/menu'),
         'output_dir' => dirname(__DIR__) . '/storage/qrcodes/',
     ],
 

@@ -10,7 +10,7 @@
             <h5 class="text-gold fw-semibold mb-3">Ameseginalew! / እናመሰግናለን!</h5>
 
             <p class="text-muted mb-4 lead">
-                Your feedback has been received and shared directly with the Kaldis Coffee management team. We truly value your support in helping us maintain the finest coffee tradition.
+                Your feedback has been received and shared directly with the Trattoria-Gusto management team. We truly value your support in helping us maintain the finest coffee tradition.
             </p>
 
             <div class="d-grid gap-2">
@@ -20,7 +20,7 @@
             </div>
 
             <div class="mt-4 pt-3 border-top text-muted extra-small">
-                Kaldis Coffee PLC &bull; Addis Ababa, Ethiopia
+                Trattoria-Gusto &bull; Addis Ababa, Ethiopia
             </div>
         </div>
     </div>

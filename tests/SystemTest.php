@@ -1,6 +1,6 @@
 <?php
 /**
- * Kaldis Coffee PLC — Automated System & Integration Test
+ * Trattoria-Gusto Digital Menu System Test Suite
  *
  * Verifies all critical application components:
  * 1. Database connectivity & schema tables
@@ -39,7 +39,7 @@ class SystemTest
     public function run(): void
     {
         echo "======================================================\n";
-        echo " Kaldis Coffee PLC — Digital Menu System Test Suite   \n";
+        echo " Trattoria-Gusto — Digital Menu System Test Suite   \n";
         echo "======================================================\n\n";
 
         $this->testDatabaseConnection();

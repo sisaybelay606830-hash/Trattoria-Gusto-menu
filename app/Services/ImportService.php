@@ -198,6 +198,14 @@ class ImportService
 
             } while ($count === self::BATCH_SIZE);
 
+            if (!$dryRun && $stats['records_inspected'] > 0) {
+                // Ensure only products present in the source database are active
+                $deactStmt = $this->local->prepare(
+                    'UPDATE `products` SET `is_active_source` = 0 WHERE `synced_at` < :started_at OR `synced_at` IS NULL'
+                );
+                $deactStmt->execute([':started_at' => $startedAt]);
+            }
+
             $stats['status'] = 'completed';
             Logger::info(sprintf(
                 'ImportService: import %scompleted — inspected=%d, inserted=%d, updated=%d, skipped=%d, errored=%d',

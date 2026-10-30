@@ -11,7 +11,7 @@
             </p>
             <div class="card p-3 border-0 bg-white shadow-sm rounded-4">
                 <p class="mb-0 text-muted small">
-                    <i class="bi bi-info-circle text-gold me-1"></i> Kaldis Coffee PLC Customer Service
+                    <i class="bi bi-info-circle text-gold me-1"></i> Trattoria-Gusto Customer Service
                 </p>
             </div>
         </div>

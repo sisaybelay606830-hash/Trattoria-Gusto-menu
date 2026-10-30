@@ -48,7 +48,7 @@ class FeedbackController
             'selectedBranch' => $selectedBranch,
             'branchCode'     => $branchCode,
             'tableRef'       => $tableRef,
-            'title'          => 'Customer Feedback — Kaldis Coffee',
+            'title'          => 'Customer Feedback — Trattoria Gusto',
             'csrf_token'     => Csrf::generate(),
             'errors'         => Session::flash('feedback_errors', []),
             'old'            => Session::flash('feedback_old', []),
@@ -125,7 +125,7 @@ class FeedbackController
     public function thankYou(): void
     {
         View::render('feedback/success', [
-            'title' => 'Thank You — Kaldis Coffee Feedback',
+            'title' => 'Thank You — Trattoria Gusto Feedback',
         ]);
     }
 }

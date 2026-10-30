@@ -1,5 +1,5 @@
 /**
- * Kaldis Coffee PLC — Digital Menu System
+ * Trattoria-Gusto — Digital Menu System
  * Client-Side Interactive Filtering & Search
  */
 
@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const parent = (col.getAttribute('data-parent') || '').toLowerCase();
             const child = (col.getAttribute('data-child') || '').toLowerCase();
 
-            const matches = !query || 
-                name.includes(query) || 
-                desc.includes(query) || 
+            const matches = !query ||
+                name.includes(query) ||
+                desc.includes(query) ||
                 code.includes(query) ||
                 parent.includes(query) ||
                 child.includes(query);

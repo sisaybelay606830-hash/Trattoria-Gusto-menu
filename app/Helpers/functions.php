@@ -13,7 +13,7 @@ if (!function_exists('base_url')) {
      */
     function base_url(string $path = ''): string
     {
-        $base = rtrim(Env::getString('APP_URL', 'http://localhost/kaldis-menu/public'), '/');
+        $base = rtrim(Env::getString('APP_URL', 'http://localhost/Trattoria-Gusto-menu/public'), '/');
         return $base . '/' . ltrim($path, '/');
     }
 }

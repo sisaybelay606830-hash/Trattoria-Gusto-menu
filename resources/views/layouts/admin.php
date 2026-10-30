@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= e($title ?? 'Kaldis Coffee Admin') ?></title>
+    <title><?= e($title ?? 'Trattoria-Gusto Admin') ?></title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,7 @@
                         <i class="bi bi-cup-hot-fill text-gold"></i>
                     </div>
                     <div>
-                        <span class="fw-bold text-white fs-6 tracking-wide">KALDIS</span>
+                        <span class="fw-bold text-white fs-6 tracking-wide">TRATTORIA-GUSTO</span>
                         <span class="d-block text-gold extra-small fw-semibold">MENU ADMIN</span>
                     </div>
                 </a>
@@ -156,7 +156,7 @@
             </div>
 
             <footer class="admin-footer p-3 bg-white border-top text-center text-muted small">
-                Kaldis Coffee PLC &middot; Internal Administration System &middot; &copy; <?= date('Y') ?>
+                Trattoria-Gusto &middot; Internal Administration System &middot; &copy; <?= date('Y') ?>
             </footer>
         </div>
     </div>

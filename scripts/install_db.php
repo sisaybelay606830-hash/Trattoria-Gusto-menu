@@ -1,7 +1,7 @@
 <?php
 /**
  * Database installer script
- * Creates the local kaldis_menu database and runs all migrations.
+ * Creates the local trattoria-gusto database and runs all migrations.
  *
  * Usage: php scripts/install_db.php [--force]
  */
@@ -20,11 +20,11 @@ $force = in_array('--force', $argv ?? [], true);
 
 $host   = Env::getString('APP_DB_HOST', '127.0.0.1');
 $port   = Env::getInt('APP_DB_PORT', 3306);
-$dbName = Env::getString('APP_DB_NAME', 'kaldis_menu');
+$dbName = Env::getString('APP_DB_NAME', 'trattoria-gusto');
 $user   = Env::getString('APP_DB_USER', 'root');
 $pass   = Env::getString('APP_DB_PASSWORD', '');
 
-echo "=== Kaldis Menu — Database Installer ===\n";
+echo "=== Trattoria-Gusto — Database Installer ===\n";
 echo "Target: {$user}@{$host}:{$port} / {$dbName}\n\n";
 
 // ── Connect without database selected first ────────────────────────────────

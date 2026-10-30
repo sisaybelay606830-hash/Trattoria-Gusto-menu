@@ -60,7 +60,7 @@ class AdminController
         $recentAudit = $stmt->fetchAll();
 
         View::render('admin/dashboard', [
-            'title'       => 'Dashboard — Kaldis Coffee Admin',
+            'title'       => 'Dashboard — Trattoria Gusto Admin',
             'stats'       => $stats,
             'recentLogs'  => $recentLogs,
             'branches'    => $branches,
@@ -107,7 +107,7 @@ class AdminController
         $vatRate    = (float) $this->settingsRepo->get('vat_rate', '1.20');
 
         View::render('admin/products/index', [
-            'title'      => 'Product Management — Kaldis Coffee Admin',
+            'title'      => 'Product Management — Trattoria Gusto Admin',
             'products'   => $result['data'],
             'total'      => $result['total'],
             'page'       => $result['page'],
@@ -239,7 +239,7 @@ class AdminController
         $categories = $this->categoryRepo->getParentCategoriesWithChildren();
 
         View::render('admin/categories/index', [
-            'title'      => 'Category Management — Kaldis Coffee Admin',
+            'title'      => 'Category Management — Trattoria Gusto Admin',
             'categories' => $categories,
             'success'    => Session::getFlash('success'),
             'error'      => Session::getFlash('error'),
@@ -278,7 +278,7 @@ class AdminController
         $branches = $this->branchRepo->getAll();
 
         View::render('admin/branches/index', [
-            'title'    => 'Branch Management — Kaldis Coffee Admin',
+            'title'    => 'Branch Management — Trattoria Gusto Admin',
             'branches' => $branches,
             'success'  => Session::getFlash('success'),
             'error'    => Session::getFlash('error'),
@@ -334,7 +334,7 @@ class AdminController
         $branches  = $this->branchRepo->getActive();
 
         View::render('admin/qrcodes/index', [
-            'title'    => 'QR Code Management — Kaldis Coffee Admin',
+            'title'    => 'QR Code Management — Trattoria Gusto Admin',
             'qrcodes'  => $qrcodes,
             'branches' => $branches,
             'service'  => $qrService,
@@ -361,7 +361,7 @@ class AdminController
             if ($type === 'feedback') {
                 $branch = $branchId > 0 ? $this->branchRepo->findById($branchId) : null;
                 $branchCode = $branch['code'] ?? null;
-                $defaultLabel = 'Kaldis Feedback QR';
+                $defaultLabel = 'KaTrattoria Gusto Feedback QR';
                 if ($branch) {
                     $defaultLabel .= ' - ' . $branch['name'];
                 }
@@ -376,7 +376,7 @@ class AdminController
                     Session::flash('error', 'Selected branch was not found.');
                     Response::redirect(base_url('admin/qrcodes'));
                 }
-                $finalLabel = $label !== '' ? $label : "Kaldis - {$branch['name']} (Table {$tableRef})";
+                $finalLabel = $label !== '' ? $label : "Trattoria Gusto - {$branch['name']} (Table {$tableRef})";
                 $res = $qrService->generateTable($branchId, $branch['code'], $tableRef, $finalLabel);
             } elseif ($type === 'branch' && $branchId > 0) {
                 $branch = $this->branchRepo->findById($branchId);
@@ -384,10 +384,10 @@ class AdminController
                     Session::flash('error', 'Selected branch was not found.');
                     Response::redirect(base_url('admin/qrcodes'));
                 }
-                $finalLabel = $label !== '' ? $label : "Kaldis - {$branch['name']}";
+                $finalLabel = $label !== '' ? $label : "Trattoria Gusto - {$branch['name']}";
                 $res = $qrService->generateBranch($branchId, $branch['code'], $finalLabel);
             } else {
-                $finalLabel = $label !== '' ? $label : 'Kaldis Coffee - General Digital Menu';
+                $finalLabel = $label !== '' ? $label : 'Trattoria Gusto - General Digital Menu';
                 $res = $qrService->generateGeneral($finalLabel);
             }
 
@@ -419,8 +419,7 @@ class AdminController
         if (!$filePath || !file_exists($filePath)) {
             Response::abort(404, 'QR code image file not found on disk.');
         }
-
-        $downloadName = 'kaldis_qr_' . preg_replace('/[^a-zA-Z0-9_\-]/', '_', $row['label']) . '.png';
+        $downloadName = 'Trattoria Gusto_qr_' . preg_replace('/[^a-zA-Z0-9_\-]/', '_', $row['label']) . '.png';
 
         header('Content-Type: image/png');
         header('Content-Disposition: attachment; filename="' . $downloadName . '"');
@@ -484,7 +483,7 @@ class AdminController
         }
 
         View::render('admin/import/index', [
-            'title'        => 'Product Synchronization — Kaldis Coffee Admin',
+            'title'        => 'Product Import & Synchronization — Trattoria Gusto Admin',
             'stats'        => $stats,
             'recentLogs'   => $recentLogs,
             'sourceStatus' => $sourceStatus,
@@ -541,7 +540,7 @@ class AdminController
         $logs = $this->importLogRepo->getRecent(50);
 
         View::render('admin/import/logs', [
-            'title' => 'Import History & Logs — Kaldis Coffee Admin',
+            'title' => 'Import Histo Trattoria Gustory & Logs — Trattoria Gusto Admin',
             'logs'  => $logs,
         ], 'admin');
     }
@@ -556,7 +555,7 @@ class AdminController
         $branches = $this->branchRepo->getActive();
 
         View::render('admin/settings/index', [
-            'title'    => 'Menu Settings — Kaldis Coffee Admin',
+            'title'    => 'Menu Settings — Trattoria Gusto Admin',
             'settings' => $settings,
             'branches' => $branches,
             'success'  => Session::getFlash('success'),
@@ -575,7 +574,7 @@ class AdminController
         $vatRate = is_numeric($rawVat) && (float)$rawVat > 0 ? number_format((float)$rawVat, 2, '.', '') : '1.20';
 
         $kvp = [
-            'menu_title'          => trim(Request::post('menu_title', 'Kaldis Coffee')),
+            'menu_title'          => trim(Request::post('menu_title', 'Trattoria Gusto')),
             'menu_subtitle'       => trim(Request::post('menu_subtitle', 'Digital Menu')),
             'default_branch_code' => trim(Request::post('default_branch_code', '')),
             'fallback_category'   => trim(Request::post('fallback_category', 'Uncategorized')),
@@ -606,7 +605,7 @@ class AdminController
         )->fetchAll();
 
         View::render('admin/users/index', [
-            'title'   => 'User Management — Kaldis Coffee Admin',
+            'title'   => 'User Management — Trattoria Gusto Admin',
             'users'   => $users,
             'success' => Session::getFlash('success'),
             'error'   => Session::getFlash('error'),

@@ -6,7 +6,7 @@
                 <span class="badge bg-gold-subtle text-gold-dark mb-2 px-3 py-1 rounded-pill fw-semibold">
                     <i class="bi bi-stars me-1"></i> Authentic Ethiopian Coffee Experience
                 </span>
-                <h1 class="hero-title mb-2"><?= e($settings['menu_title']['value'] ?? 'Kaldis Coffee') ?></h1>
+                <h1 class="hero-title mb-2"><?= e($settings['menu_title']['value'] ?? 'Trattoria-Gusto') ?></h1>
                 <p class="lead mb-0 text-white-50" style="font-size: 1rem;">
                     <?= e($settings['menu_subtitle']['value'] ?? 'Freshly brewed single-origin beans, traditional delicacies, and light meals.') ?>
                 </p>

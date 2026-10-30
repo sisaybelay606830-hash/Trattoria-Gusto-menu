@@ -1,5 +1,5 @@
 # ============================================================
-# Kaldis Coffee PLC — Root Application .htaccess
+# Trattoria-Gusto Digital Menu — Root Application .htaccess
 # Directs requests to /public/ and denies direct file access
 # Compatible with Apache 2.4 and Apache 2.2
 # ============================================================

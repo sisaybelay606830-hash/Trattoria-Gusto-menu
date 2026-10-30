@@ -56,7 +56,7 @@ class ProductRepository
     public function findAll(array $filters = [], int $page = 1, int $perPage = 24): array
     {
         $page    = max(1, $page);
-        $perPage = max(1, min(200, $perPage));
+        $perPage = max(1, min(1000, $perPage));
         $offset  = ($page - 1) * $perPage;
 
         [$whereClause, $params] = $this->buildWhereClause($filters);

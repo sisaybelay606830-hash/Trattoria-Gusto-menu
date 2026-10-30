@@ -8,7 +8,7 @@
             </div>
             <h3 class="font-playfair text-gold fw-bold mb-1">Your Voice Matters to Us</h3>
             <p class="text-white-50 mb-0 small">
-                Help Kaldis Coffee elevate your coffee & dining experience. We read every single review!
+                Help Trattoria-Gusto elevate your coffee & dining experience. We read every single review!
             </p>
         </div>
 
@@ -36,7 +36,7 @@
                 <div class="row g-3 mb-4">
                     <div class="col-sm-7">
                         <label class="form-label fw-bold text-espresso small">
-                            <i class="bi bi-geo-alt-fill text-gold me-1"></i> Kaldis Branch
+                            <i class="bi bi-geo-alt-fill text-gold me-1"></i> Trattoria-Gusto Branch
                         </label>
                         <select name="branch_id" class="form-select rounded-3">
                             <option value="">— Select Branch (Optional) —</option>
@@ -180,7 +180,7 @@ document += window.addEventListener('DOMContentLoaded', function() {
         2: 'Fair — Room for improvement',
         3: 'Good — Met expectations',
         4: 'Very Good — Really enjoyed it!',
-        5: 'Excellent — Kaldis at its best!'
+        5: 'Excellent — Trattoria-Gusto at its best!'
     };
 
     // Overall Star Rating interactive selector

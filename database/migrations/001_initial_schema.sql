@@ -1,7 +1,7 @@
 -- ============================================================
--- Kaldis Coffee PLC Digital Menu — Local Database Schema
+-- Trattoria Gusto Digital Menu — Local Database Schema
 -- Migration 001: Initial schema
--- Run with: mysql -u root kaldis_menu < database/migrations/001_initial_schema.sql
+-- Run with: mysql -u root trattoriagusto_menu < database/migrations/001_initial_schema.sql
 -- ============================================================
 
 SET NAMES utf8mb4;
@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `audit_logs` (
 -- Default settings
 -- ----------------------------------------------------------------
 INSERT IGNORE INTO `settings` (`key`, `value`, `description`) VALUES
-('menu_title',          'Kaldis Coffee',              'Public menu page title'),
+('menu_title',          'Trattoria Gusto',              'Public menu page title'),
 ('menu_subtitle',       'Digital Menu',               'Public menu subtitle'),
 ('default_branch_code', '',                           'Default branch shown on menu (empty = all)'),
 ('fallback_category',   'Uncategorized',              'Category name for products with missing preferences'),

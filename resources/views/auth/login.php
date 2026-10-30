@@ -6,7 +6,7 @@
                     <div class="brand-crest mx-auto mb-3" style="width: 52px; height: 52px;">
                         <i class="bi bi-cup-hot-fill text-gold fs-4"></i>
                     </div>
-                    <h4 class="fw-bold mb-1 font-heading text-white">Kaldis Staff Portal</h4>
+                    <h4 class="fw-bold mb-1 font-heading text-white">Trattoria-Gusto Staff Portal</h4>
                     <p class="extra-small text-gold-light mb-0 text-uppercase tracking-wide">Digital Menu Management</p>
                 </div>
 

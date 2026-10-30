@@ -1,17 +1,17 @@
 -- ============================================================
--- Kaldis Coffee PLC — CNET Synced Data Staging Database
--- Schema for `kaldisbp_cnet_synced_data`.`article_import`
+-- Trattoria-Gusto-menu — CNET Synced Data Staging Database
+-- Schema for `trattoriagusto_cnet_synced_data`.`article_import`
 --
 -- Generated from CNET ERP Source View:
--- [KALDIS COFFEE 2019].[article].[vw_ArticleView]
+-- [trattoriagusto].[article].[vw_ArticleView]
 -- Filter: [gslTypeId] = 13 AND [isActive] = 1 AND [articleCode] IS NOT NULL
 -- ============================================================
 
-CREATE DATABASE IF NOT EXISTS `kaldisbp_cnet_synced_data`
+CREATE DATABASE IF NOT EXISTS `trattoriabp_cnet_synced_data`
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
-USE `kaldisbp_cnet_synced_data`;
+USE `trattoriabp_cnet_synced_data`;
 
 DROP TABLE IF EXISTS `article_import`;
 

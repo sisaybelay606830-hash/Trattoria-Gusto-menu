@@ -4,7 +4,7 @@
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
             <div class="card-header bg-white border-0 py-3 d-flex align-items-center justify-content-between">
                 <div>
-                    <h6 class="fw-bold text-espresso mb-0">Kaldis Coffee Branches</h6>
+                    <h6 class="fw-bold text-espresso mb-0">Trattoria-Gusto Branches</h6>
                     <span class="text-muted extra-small">Manage locations and branch-specific QR links</span>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                                                 <?= \App\Helpers\Csrf::field() ?>
                                                 <input type="hidden" name="type" value="branch">
                                                 <input type="hidden" name="branch_id" value="<?= $b['id'] ?>">
-                                                <input type="hidden" name="label" value="Kaldis - <?= e($b['name']) ?>">
+                                                <input type="hidden" name="label" value="Trattoria-Gusto - <?= e($b['name']) ?>">
                                                 <button type="submit" class="btn btn-sm btn-outline-gold rounded-pill px-2 py-1 extra-small" title="Generate QR Code">
                                                     <i class="bi bi-qr-code"></i> QR
                                                 </button>
@@ -86,7 +86,7 @@
 
                     <div class="mb-3">
                         <label for="name" class="form-label small fw-semibold text-espresso">Branch Name</label>
-                        <input type="text" class="form-control form-control-sm" id="name" name="name" required placeholder="e.g. Kaldis Bole Medhanialem">
+                        <input type="text" class="form-control form-control-sm" id="name" name="name" required placeholder="e.g. Trattoria-Gusto Bole Medhanialem">
                     </div>
 
                     <div class="mb-3">
