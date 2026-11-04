@@ -69,11 +69,23 @@
                                             <?php if ((bool)$qr['is_active']): ?>
                                                 <form action="<?= base_url('admin/qrcodes/' . $qr['id'] . '/deactivate') ?>" method="POST" class="d-inline" onsubmit="return confirm('Deactivate this QR code?');">
                                                     <?= \App\Helpers\Csrf::field() ?>
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-2 py-1 extra-small" title="Deactivate">
+                                                    <button type="submit" class="btn btn-sm btn-outline-warning rounded-pill px-2 py-1 extra-small" title="Deactivate">
                                                         <i class="bi bi-slash-circle"></i>
                                                     </button>
                                                 </form>
                                             <?php endif; ?>
+                                            <button type="button" 
+                                                    class="btn btn-sm btn-outline-primary rounded-pill px-2 py-1 extra-small" 
+                                                    title="Edit QR Code"
+                                                    onclick='editQrModal(<?= json_encode($qr, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>)'>
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <form action="<?= base_url('admin/qrcodes/' . $qr['id'] . '/delete') ?>" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to permanently delete QR code \'<?= e($qr['label']) ?>\'? This will remove its image file as well.');">
+                                                <?= \App\Helpers\Csrf::field() ?>
+                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-2 py-1 extra-small" title="Delete QR Code">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -142,6 +154,61 @@
     </div>
 </div>
 
+<!-- Edit QR Code Modal -->
+<div class="modal fade" id="editQrModal" tabindex="-1" aria-labelledby="editQrModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 pb-0">
+                <h6 class="modal-title fw-bold text-espresso" id="editQrModalLabel">
+                    <i class="bi bi-pencil-square text-gold me-1"></i> Edit QR Code
+                </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="editQrForm" method="POST" action="">
+                <?= \App\Helpers\Csrf::field() ?>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="edit_label" class="form-label small fw-semibold text-espresso">Label Name</label>
+                        <input type="text" class="form-control form-control-sm" id="edit_label" name="label" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_branch_id" class="form-label small fw-semibold text-espresso">Assigned Branch</label>
+                        <select name="branch_id" id="edit_branch_id" class="form-select form-select-sm">
+                            <option value="">-- No Specific Branch (General) --</option>
+                            <?php foreach ($branches as $b): ?>
+                                <option value="<?= $b['id'] ?>"><?= e($b['name']) ?> (<?= e($b['code']) ?>)</option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edit_table_ref" class="form-label small fw-semibold text-espresso">Table Number / Reference</label>
+                        <input type="text" class="form-control form-control-sm" id="edit_table_ref" name="table_ref" placeholder="e.g. Table 04">
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="edit_is_active" name="is_active" value="1">
+                            <label class="form-check-label small fw-semibold" for="edit_is_active">QR Code is Active</label>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-light border small text-muted mb-0">
+                        <i class="bi bi-info-circle me-1"></i> Public URL: <span id="edit_public_url" class="text-break fw-semibold"></span>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-gold rounded-pill px-4 fw-semibold">
+                        <i class="bi bi-check2 me-1"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
 function toggleQrFields(type) {
     const branchGrp = document.getElementById('branchFieldGroup');
@@ -161,6 +228,20 @@ function toggleQrFields(type) {
         if (tableGrp)  tableGrp.style.display = 'block';
     }
 }
+
+function editQrModal(qr) {
+    const form = document.getElementById('editQrForm');
+    form.action = '<?= base_url('admin/qrcodes') ?>/' + qr.id + '/edit';
+    document.getElementById('edit_label').value = qr.label || '';
+    document.getElementById('edit_branch_id').value = qr.branch_id || '';
+    document.getElementById('edit_table_ref').value = qr.table_ref || '';
+    document.getElementById('edit_is_active').checked = parseInt(qr.is_active, 10) === 1;
+    document.getElementById('edit_public_url').textContent = qr.public_url || '';
+
+    const modal = new bootstrap.Modal(document.getElementById('editQrModal'));
+    modal.show();
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const sel = document.getElementById('typeSelect');
     if (sel) toggleQrFields(sel.value);

@@ -74,5 +74,12 @@ class BranchRepository
         ]);
         return (int)$pdo->lastInsertId();
     }
+
+    public function delete(int $id): bool
+    {
+        $pdo = Database::local();
+        $stmt = $pdo->prepare("DELETE FROM `branches` WHERE `id` = ?");
+        return $stmt->execute([$id]);
+    }
 }
 

@@ -59,6 +59,18 @@
                                                     <i class="bi bi-qr-code"></i> QR
                                                 </button>
                                             </form>
+                                            <button type="button" 
+                                                    class="btn btn-sm btn-outline-primary rounded-pill px-2 py-1 extra-small" 
+                                                    title="Edit Branch"
+                                                    onclick='editBranch(<?= json_encode($b, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>)'>
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </button>
+                                            <form action="<?= base_url('admin/branches/' . $b['id'] . '/delete') ?>" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete branch \'<?= e($b['name']) ?>\'? This cannot be undone.');">
+                                                <?= \App\Helpers\Csrf::field() ?>
+                                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-2 py-1 extra-small" title="Delete Branch">
+                                                    <i class="bi bi-trash"></i> Delete
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -74,15 +86,19 @@
         </div>
     </div>
 
-    <!-- Add Branch Form -->
+    <!-- Add / Edit Branch Form -->
     <div class="col-lg-4">
         <div class="card border-0 shadow-sm rounded-4">
-            <div class="card-header bg-white border-0 py-3">
-                <h6 class="fw-bold text-espresso mb-0"><i class="bi bi-plus-circle me-1 text-gold"></i> Add New Branch</h6>
+            <div class="card-header bg-white border-0 py-3 d-flex align-items-center justify-content-between">
+                <h6 class="fw-bold text-espresso mb-0" id="branchFormTitle"><i class="bi bi-plus-circle me-1 text-gold"></i> Add New Branch</h6>
+                <button type="button" class="btn btn-sm btn-link text-muted p-0 text-decoration-none" id="cancelEditBtn" style="display:none;" onclick="resetBranchForm()">
+                    <i class="bi bi-x-circle"></i> Cancel
+                </button>
             </div>
             <div class="card-body p-3">
-                <form action="<?= base_url('admin/branches') ?>" method="POST">
+                <form action="<?= base_url('admin/branches') ?>" method="POST" id="branchForm">
                     <?= \App\Helpers\Csrf::field() ?>
+                    <input type="hidden" name="id" id="branch_id" value="">
 
                     <div class="mb-3">
                         <label for="name" class="form-label small fw-semibold text-espresso">Branch Name</label>
@@ -112,7 +128,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-gold btn-sm w-100 rounded-pill py-2 fw-semibold">
+                    <button type="submit" id="saveBranchBtn" class="btn btn-gold btn-sm w-100 rounded-pill py-2 fw-semibold">
                         <i class="bi bi-check2 me-1"></i> Save Branch
                     </button>
                 </form>
@@ -120,4 +136,28 @@
         </div>
     </div>
 </div>
+
+<script>
+function editBranch(branch) {
+    document.getElementById('branchFormTitle').innerHTML = '<i class="bi bi-pencil-square me-1 text-gold"></i> Edit Branch';
+    document.getElementById('branch_id').value = branch.id || '';
+    document.getElementById('name').value = branch.name || '';
+    document.getElementById('code').value = branch.code || '';
+    document.getElementById('address').value = branch.address || '';
+    document.getElementById('phone').value = branch.phone || '';
+    document.getElementById('is_active').checked = parseInt(branch.is_active, 10) === 1;
+    document.getElementById('saveBranchBtn').innerHTML = '<i class="bi bi-check2-circle me-1"></i> Update Branch';
+    document.getElementById('cancelEditBtn').style.display = 'inline-block';
+    document.getElementById('name').focus();
+}
+
+function resetBranchForm() {
+    document.getElementById('branchFormTitle').innerHTML = '<i class="bi bi-plus-circle me-1 text-gold"></i> Add New Branch';
+    document.getElementById('branch_id').value = '';
+    document.getElementById('branchForm').reset();
+    document.getElementById('is_active').checked = true;
+    document.getElementById('saveBranchBtn').innerHTML = '<i class="bi bi-check2 me-1"></i> Save Branch';
+    document.getElementById('cancelEditBtn').style.display = 'none';
+}
+</script>
 

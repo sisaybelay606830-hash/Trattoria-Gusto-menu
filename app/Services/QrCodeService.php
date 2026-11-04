@@ -187,6 +187,46 @@ class QrCodeService
         )->fetchAll();
     }
 
+    public function update(int $id, array $data): bool
+    {
+        $fields = [];
+        $params = [':id' => $id];
+
+        if (array_key_exists('label', $data)) {
+            $fields[] = "`label` = :label";
+            $params[':label'] = $data['label'];
+        }
+        if (array_key_exists('branch_id', $data)) {
+            $fields[] = "`branch_id` = :branch_id";
+            $params[':branch_id'] = $data['branch_id'] ? (int)$data['branch_id'] : null;
+        }
+        if (array_key_exists('table_ref', $data)) {
+            $fields[] = "`table_ref` = :table_ref";
+            $params[':table_ref'] = $data['table_ref'];
+        }
+        if (array_key_exists('is_active', $data)) {
+            $fields[] = "`is_active` = :is_active";
+            $params[':is_active'] = (int)$data['is_active'];
+        }
+
+        if (empty($fields)) {
+            return false;
+        }
+
+        $sql = "UPDATE `qr_codes` SET " . implode(', ', $fields) . " WHERE `id` = :id";
+        return Database::local()->prepare($sql)->execute($params);
+    }
+
+    public function delete(int $id): bool
+    {
+        $filePath = $this->getFilePath($id);
+        if ($filePath && file_exists($filePath)) {
+            @unlink($filePath);
+        }
+        $stmt = Database::local()->prepare("DELETE FROM `qr_codes` WHERE `id` = ?");
+        return $stmt->execute([$id]);
+    }
+
     public function deactivate(int $id): void
     {
         Database::local()

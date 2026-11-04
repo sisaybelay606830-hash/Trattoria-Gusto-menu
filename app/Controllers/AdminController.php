@@ -323,6 +323,26 @@ class AdminController
         Response::redirect(base_url('admin/branches'));
     }
 
+    public function branchDelete(string $id): void
+    {
+        AuthMiddleware::requireAuth();
+        if (!Csrf::verify()) {
+            Session::flash('error', 'Invalid security token.');
+            Response::redirect(base_url('admin/branches'));
+        }
+
+        $branch = $this->branchRepo->findById((int)$id);
+        if ($branch) {
+            $this->branchRepo->delete((int)$id);
+            AuditLog::record('branch_deleted', 'branch', (int)$id, ['name' => $branch['name'], 'code' => $branch['code']]);
+            Session::flash('success', "Branch '{$branch['name']}' deleted successfully.");
+        } else {
+            Session::flash('error', 'Branch not found.');
+        }
+
+        Response::redirect(base_url('admin/branches'));
+    }
+
     // =========================================================================
     // QR Code Management
     // =========================================================================
@@ -460,6 +480,64 @@ class AdminController
         AuditLog::record('qr_deactivated', 'qr_code', (int) $id);
 
         Session::flash('success', 'QR code deactivated.');
+        Response::redirect(base_url('admin/qrcodes'));
+    }
+
+    public function qrcodeUpdate(string $id): void
+    {
+        AuthMiddleware::requireAuth();
+        if (!Csrf::verify()) {
+            Session::flash('error', 'Invalid security token.');
+            Response::redirect(base_url('admin/qrcodes'));
+        }
+
+        $label = trim((string)Request::post('label', ''));
+        if ($label === '') {
+            Session::flash('error', 'QR Code label cannot be empty.');
+            Response::redirect(base_url('admin/qrcodes'));
+        }
+
+        $tableRef = trim((string)Request::post('table_ref', ''));
+        $isActive = Request::post('is_active') !== null ? 1 : 0;
+        $branchId = Request::int('branch_id');
+
+        $qrService = new QrCodeService();
+        $qr = $qrService->getById((int)$id);
+        if (!$qr) {
+            Session::flash('error', 'QR code not found.');
+            Response::redirect(base_url('admin/qrcodes'));
+        }
+
+        $qrService->update((int)$id, [
+            'label'     => $label,
+            'branch_id' => $branchId > 0 ? $branchId : null,
+            'table_ref' => $tableRef !== '' ? $tableRef : null,
+            'is_active' => $isActive,
+        ]);
+
+        AuditLog::record('qr_updated', 'qr_code', (int)$id, ['label' => $label]);
+        Session::flash('success', "QR code '{$label}' updated successfully.");
+        Response::redirect(base_url('admin/qrcodes'));
+    }
+
+    public function qrcodeDelete(string $id): void
+    {
+        AuthMiddleware::requireAuth();
+        if (!Csrf::verify()) {
+            Session::flash('error', 'Invalid security token.');
+            Response::redirect(base_url('admin/qrcodes'));
+        }
+
+        $qrService = new QrCodeService();
+        $qr = $qrService->getById((int)$id);
+        if ($qr) {
+            $qrService->delete((int)$id);
+            AuditLog::record('qr_deleted', 'qr_code', (int)$id, ['label' => $qr['label']]);
+            Session::flash('success', "QR code '{$qr['label']}' deleted successfully.");
+        } else {
+            Session::flash('error', 'QR code not found.');
+        }
+
         Response::redirect(base_url('admin/qrcodes'));
     }
 

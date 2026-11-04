@@ -41,15 +41,18 @@ Router::get('/admin/categories',       [AdminController::class, 'categories']);
 Router::post('/admin/categories/toggle',[AdminController::class, 'categoryToggle']);
 
 // ── Admin — Branches ────────────────────────────────────────────────────────
-Router::get('/admin/branches',  [AdminController::class, 'branches']);
-Router::post('/admin/branches', [AdminController::class, 'branchSave']);
+Router::get('/admin/branches',             [AdminController::class, 'branches']);
+Router::post('/admin/branches',            [AdminController::class, 'branchSave']);
+Router::post('/admin/branches/{id}/delete',[AdminController::class, 'branchDelete']);
 
 // ── Admin — QR Codes ────────────────────────────────────────────────────────
 Router::get('/admin/qrcodes',                     [AdminController::class, 'qrcodes']);
 Router::post('/admin/qrcodes/generate',           [AdminController::class, 'qrcodeGenerate']);
+Router::post('/admin/qrcodes/{id}/edit',          [AdminController::class, 'qrcodeUpdate']);
 Router::get('/admin/qrcodes/{id}/download',       [AdminController::class, 'qrcodeDownload']);
 Router::get('/admin/qrcodes/{id}/print',          [AdminController::class, 'qrcodePrint']);
 Router::post('/admin/qrcodes/{id}/deactivate',    [AdminController::class, 'qrcodeDeactivate']);
+Router::post('/admin/qrcodes/{id}/delete',        [AdminController::class, 'qrcodeDelete']);
 
 // ── Admin — Import ──────────────────────────────────────────────────────────
 Router::get('/admin/import',       [AdminController::class, 'importPage']);
