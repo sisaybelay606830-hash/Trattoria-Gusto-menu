@@ -6,11 +6,15 @@ namespace App\Controllers;
 
 use App\Helpers\{View, Request, Response};
 use App\Repositories\{ProductRepository, CategoryRepository, BranchRepository, SettingsRepository};
+use App\Services\AutoSyncService;
 
 class MenuController
 {
     public function index(): void
     {
+        // Automatically synchronize any changes from CNET ERP staging in the background (throttled)
+        AutoSyncService::checkAndSync();
+
         $settings  = (new SettingsRepository())->getAll();
         $maintenance = ($settings['maintenance_mode']['value'] ?? '0') === '1';
 

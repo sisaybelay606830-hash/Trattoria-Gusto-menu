@@ -73,15 +73,6 @@
                     </li>
                 </ul>
 
-                <div class="nav-section-title px-3 mb-1 text-uppercase extra-small text-muted fw-bold">Data & Sync</div>
-                <ul class="nav flex-column mb-3">
-                    <li class="nav-item">
-                        <a href="<?= base_url('admin/import') ?>" class="nav-link <?= str_contains($_SERVER['REQUEST_URI'] ?? '', 'admin/import') ? 'active' : '' ?>">
-                            <i class="bi bi-arrow-repeat me-2"></i> Sync Products
-                        </a>
-                    </li>
-                </ul>
-
                 <div class="nav-section-title px-3 mb-1 text-uppercase extra-small text-muted fw-bold">System</div>
                 <ul class="nav flex-column">
                     <li class="nav-item">

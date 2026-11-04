@@ -5,11 +5,11 @@
         <p class="text-muted small mb-0">System status and digital menu overview</p>
     </div>
     <div class="d-flex gap-2">
-        <a href="<?= base_url('admin/import') ?>" class="btn btn-gold btn-sm rounded-pill px-3">
-            <i class="bi bi-arrow-repeat me-1"></i> Sync Products
-        </a>
-        <a href="<?= base_url('admin/qrcodes') ?>" class="btn btn-outline-gold btn-sm rounded-pill px-3">
+        <a href="<?= base_url('admin/qrcodes') ?>" class="btn btn-gold btn-sm rounded-pill px-3">
             <i class="bi bi-qr-code me-1"></i> QR Codes
+        </a>
+        <a href="<?= base_url('admin/feedbacks') ?>" class="btn btn-outline-gold btn-sm rounded-pill px-3">
+            <i class="bi bi-chat-heart me-1"></i> Feedback
         </a>
     </div>
 </div>

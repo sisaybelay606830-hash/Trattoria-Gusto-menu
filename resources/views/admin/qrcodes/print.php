@@ -133,7 +133,7 @@
                 <i class="bi bi-cup-hot-fill text-warning fs-3"></i>
             </div>
             <div class="brand-title">KALDIS COFFEE</div>
-            <div class="brand-tag">TRADITION & EXCELLENCE &middot; ETHIOPIA</div>
+            <div class="brand-tag">TRADITION & EXCELLENCE  &middot; ETHIOPIA</div>
 
             <div class="qr-wrapper">
                 <?php if (!empty($previewBase64)): ?>

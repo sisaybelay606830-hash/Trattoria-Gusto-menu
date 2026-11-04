@@ -36,8 +36,8 @@ class Router
         $method = strtoupper($_SERVER['REQUEST_METHOD'] ?? 'GET');
         $rawUri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
 
-        // Strip the sub-directory prefix so that routes are relative.
-        // Supports running under /kaldis-menu/public/, /kaldis-menu/, or root VirtualHost.
+        // Strip the sub-directory or /public prefix so routes are always relative.
+        // Handles: /menu, /public/menu, /kaldis-menu/menu, /kaldis-menu/public/menu
         $scriptDir = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? '/'), '/\\');
         $path = $rawUri;
 
@@ -49,6 +49,14 @@ class Router
                 $path = substr($path, strlen($parentDir));
             }
         }
+
+        // Also strip leading /public or /public/ if web root is the parent folder
+        if (str_starts_with($path, '/public/')) {
+            $path = substr($path, 7);
+        } elseif ($path === '/public') {
+            $path = '/';
+        }
+
         $path = '/' . ltrim($path, '/');
 
         foreach (self::$routes as $route) {

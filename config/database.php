@@ -16,7 +16,7 @@ return [
         'port'     => Env::getInt('APP_DB_PORT', 3306),
         'database' => Env::getString('APP_DB_NAME', 'kaldis_menu'),
         'username' => Env::getString('APP_DB_USER', 'root'),
-        'password' => Env::getString('APP_DB_PASSWORD', ''),
+        'password' => Env::getString('APP_DB_PASSWORD', 'root'),
         'charset'  => 'utf8mb4',
         'options'  => [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
