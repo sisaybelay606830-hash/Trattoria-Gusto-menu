@@ -125,9 +125,13 @@
                             </td>
                             <td>
                                 <?php if ((bool)$p['is_active_source']): ?>
-                                    <span class="badge bg-success-subtle text-success extra-small">Active</span>
+                                    <span class="badge bg-success-subtle text-success extra-small fw-semibold">
+                                        <i class="bi bi-check-circle-fill me-1"></i> Active
+                                    </span>
                                 <?php else: ?>
-                                    <span class="badge bg-secondary-subtle text-secondary extra-small">Inactive</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle extra-small fw-semibold">
+                                        <i class="bi bi-x-circle-fill me-1"></i> Inactive
+                                    </span>
                                 <?php endif; ?>
                             </td>
                             <td>
