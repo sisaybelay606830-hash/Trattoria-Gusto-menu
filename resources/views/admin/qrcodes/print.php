@@ -204,7 +204,6 @@
                         Table: <?= e($qr['table_ref']) ?>
                     </div>
                 <?php endif; ?>
-                <div class="url-text"><?= e($qr['public_url']) ?></div>
             </div>
         </div>
 

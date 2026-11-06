@@ -1,10 +1,21 @@
 <div class="feedback-success py-5">
     <div class="container" style="max-width: 580px;">
+        <?php 
+            $settingsRepo = new \App\Repositories\SettingsRepository();
+            $customLogo = $settingsRepo->get('custom_logo', '');
+            $hasCustomLogo = !empty($customLogo) && file_exists(BASE_PATH . '/public/' . ltrim($customLogo, '/'));
+        ?>
         <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white text-center">
             
-            <div class="success-icon-wrap mx-auto mb-4 d-flex align-items-center justify-content-center bg-gold-subtle rounded-circle" style="width: 80px; height: 80px;">
-                <i class="bi bi-heart-fill text-gold" style="font-size: 2.5rem;"></i>
-            </div>
+            <?php if ($hasCustomLogo): ?>
+                <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm mx-auto mb-4 d-flex align-items-center justify-content-center bg-white border border-gold" style="width: 80px; height: 80px;">
+                    <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+            <?php else: ?>
+                <div class="success-icon-wrap mx-auto mb-4 d-flex align-items-center justify-content-center bg-gold-subtle rounded-circle" style="width: 80px; height: 80px;">
+                    <i class="bi bi-heart-fill text-gold" style="font-size: 2.5rem;"></i>
+                </div>
+            <?php endif; ?>
 
             <h2 class="font-playfair text-espresso fw-bold mb-2">Thank You!</h2>
             <h5 class="text-gold fw-semibold mb-3">Ameseginalew! / እናመሰግናለን!</h5>

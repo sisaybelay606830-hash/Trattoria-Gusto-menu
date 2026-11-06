@@ -2,10 +2,21 @@
     <div class="container" style="max-width: 680px;">
 
         <!-- Header Card -->
+        <?php 
+            $settingsRepo = new \App\Repositories\SettingsRepository();
+            $customLogo = $settingsRepo->get('custom_logo', '');
+            $hasCustomLogo = !empty($customLogo) && file_exists(BASE_PATH . '/public/' . ltrim($customLogo, '/'));
+        ?>
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 bg-espresso text-white text-center p-4">
-            <div class="brand-crest mx-auto mb-3" style="width: 52px; height: 52px; font-size: 1.5rem;">
-                <i class="bi bi-chat-heart-fill text-gold"></i>
-            </div>
+            <?php if ($hasCustomLogo): ?>
+                <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm mx-auto mb-3 d-flex align-items-center justify-content-center bg-white" style="width: 60px; height: 60px;">
+                    <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+            <?php else: ?>
+                <div class="brand-crest mx-auto mb-3" style="width: 52px; height: 52px; font-size: 1.5rem;">
+                    <i class="bi bi-chat-heart-fill text-gold"></i>
+                </div>
+            <?php endif; ?>
             <h3 class="font-playfair text-gold fw-bold mb-1">Your Voice Matters to Us</h3>
             <p class="text-white-50 mb-0 small">
                 Help Kaldis Coffee elevate your coffee & dining experience. We read every single review!
