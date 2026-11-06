@@ -29,3 +29,8 @@ CREATE TABLE IF NOT EXISTS `feedbacks` (
 ALTER TABLE `qr_codes`
     MODIFY COLUMN `type` ENUM('general', 'branch', 'table', 'feedback') NOT NULL DEFAULT 'general';
 
+-- 3. Ensure default 4 Kilo branch exists
+INSERT IGNORE INTO `branches` (`code`, `name`, `address`, `phone`, `is_active`)
+VALUES ('4_KILO', 'Kaldis 4 Kilo', '4 Kilo, Near Addis Ababa University, Addis Ababa', '+251 111 23 45 67', 1);
+
+

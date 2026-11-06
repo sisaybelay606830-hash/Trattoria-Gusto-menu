@@ -1,15 +1,21 @@
 <div class="feedback-success py-5">
     <div class="container" style="max-width: 580px;">
         <?php 
-            $settingsRepo = new \App\Repositories\SettingsRepository();
-            $customLogo = $settingsRepo->get('custom_logo', '');
-            $hasCustomLogo = !empty($customLogo) && file_exists(BASE_PATH . '/public/' . ltrim($customLogo, '/'));
+            if (empty($settings)) {
+                try {
+                    $settings = (new \App\Repositories\SettingsRepository())->getAll();
+                } catch (\Throwable $e) {
+                    $settings = [];
+                }
+            }
+            $customLogo = $settings['custom_logo']['value'] ?? '';
+            $hasCustomLogo = !empty($customLogo);
         ?>
         <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white text-center">
             
             <?php if ($hasCustomLogo): ?>
-                <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm mx-auto mb-4 d-flex align-items-center justify-content-center bg-white border border-gold" style="width: 80px; height: 80px;">
-                    <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm mx-auto mb-4 d-flex align-items-center justify-content-center bg-white border border-gold" style="width: 80px; height: 80px; padding: 3px;">
+                    <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
                 </div>
             <?php else: ?>
                 <div class="success-icon-wrap mx-auto mb-4 d-flex align-items-center justify-content-center bg-gold-subtle rounded-circle" style="width: 80px; height: 80px;">

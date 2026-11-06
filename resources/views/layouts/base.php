@@ -23,12 +23,19 @@
             <div class="d-flex align-items-center justify-content-between">
                 <a href="<?= base_url('menu') ?>" class="text-decoration-none d-flex align-items-center gap-2">
                     <?php 
+                        if (empty($settings)) {
+                            try {
+                                $settings = (new \App\Repositories\SettingsRepository())->getAll();
+                            } catch (\Throwable $e) {
+                                $settings = [];
+                            }
+                        }
                         $customLogo = $settings['custom_logo']['value'] ?? ''; 
-                        $hasCustomLogo = !empty($customLogo) && file_exists(BASE_PATH . '/public/' . ltrim($customLogo, '/'));
+                        $hasCustomLogo = !empty($customLogo);
                     ?>
                     <?php if ($hasCustomLogo): ?>
-                        <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm d-flex align-items-center justify-content-center bg-white" style="width: 44px; height: 44px;">
-                            <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                        <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm d-flex align-items-center justify-content-center bg-white" style="width: 44px; height: 44px; border: 2px solid #c69214; padding: 2px;">
+                            <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
                         </div>
                     <?php else: ?>
                         <div class="brand-crest">
@@ -70,8 +77,8 @@
                 </a>
             </div>
             <?php if ($hasCustomLogo): ?>
-                <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm mx-auto mb-2 d-flex align-items-center justify-content-center bg-white" style="width: 40px; height: 40px;">
-                    <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm mx-auto mb-2 d-flex align-items-center justify-content-center bg-white" style="width: 48px; height: 48px; border: 2px solid #c69214; padding: 2px;">
+                    <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
                 </div>
             <?php else: ?>
                 <div class="brand-crest mx-auto mb-2" style="width: 36px; height: 36px;">

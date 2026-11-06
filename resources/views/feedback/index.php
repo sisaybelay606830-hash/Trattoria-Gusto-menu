@@ -3,14 +3,20 @@
 
         <!-- Header Card -->
         <?php 
-            $settingsRepo = new \App\Repositories\SettingsRepository();
-            $customLogo = $settingsRepo->get('custom_logo', '');
-            $hasCustomLogo = !empty($customLogo) && file_exists(BASE_PATH . '/public/' . ltrim($customLogo, '/'));
+            if (empty($settings)) {
+                try {
+                    $settings = (new \App\Repositories\SettingsRepository())->getAll();
+                } catch (\Throwable $e) {
+                    $settings = [];
+                }
+            }
+            $customLogo = $settings['custom_logo']['value'] ?? '';
+            $hasCustomLogo = !empty($customLogo);
         ?>
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 bg-espresso text-white text-center p-4">
             <?php if ($hasCustomLogo): ?>
-                <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm mx-auto mb-3 d-flex align-items-center justify-content-center bg-white" style="width: 60px; height: 60px;">
-                    <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm mx-auto mb-3 d-flex align-items-center justify-content-center bg-white" style="width: 70px; height: 70px; border: 2px solid #c69214; padding: 3px;">
+                    <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
                 </div>
             <?php else: ?>
                 <div class="brand-crest mx-auto mb-3" style="width: 52px; height: 52px; font-size: 1.5rem;">
@@ -39,9 +45,7 @@
         <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
             <form action="<?= base_url('feedback') ?>" method="POST" id="feedbackForm">
                 <input type="hidden" name="csrf_token" value="<?= e($csrf_token) ?>">
-                <?php if ($selectedBranch): ?>
-                    <input type="hidden" name="branch_code" value="<?= e($selectedBranch['code']) ?>">
-                <?php endif; ?>
+                <input type="hidden" name="branch_code" value="<?= e($selectedBranch['code'] ?? '4_KILO') ?>">
 
                 <!-- Branch & Table Selection -->
                 <div class="row g-3 mb-4">
@@ -49,25 +53,14 @@
                         <label class="form-label fw-bold text-espresso small">
                             <i class="bi bi-geo-alt-fill text-gold me-1"></i> Kaldis Branch
                         </label>
-                        <?php if ($selectedBranch): ?>
-                            <div class="p-2 px-3 bg-gold-subtle text-gold-dark rounded-3 fw-bold d-flex align-items-center justify-content-between">
-                                <span><i class="bi bi-geo-alt-fill me-1"></i> <?= e($selectedBranch['name']) ?></span>
-                                <span class="badge bg-gold text-white extra-small">Auto-detected from QR</span>
-                            </div>
-                            <input type="hidden" name="branch_id" value="<?= e($selectedBranch['id']) ?>">
-                        <?php else: ?>
-                            <select name="branch_id" class="form-select rounded-3">
-                                <option value="">— Select Branch (Optional) —</option>
-                                <?php foreach ($branches as $b): ?>
-                                    <?php 
-                                        $isSelected = ((int)($old['branch_id'] ?? 0) === $b['id']);
-                                    ?>
-                                    <option value="<?= e($b['id']) ?>" <?= $isSelected ? 'selected' : '' ?>>
-                                        <?= e($b['name']) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        <?php endif; ?>
+                        <div class="p-2 px-3 bg-gold-subtle text-gold-dark rounded-3 fw-bold d-flex align-items-center justify-content-between border border-gold-subtle shadow-sm">
+                            <span class="d-flex align-items-center gap-2">
+                                <i class="bi bi-geo-alt-fill text-gold fs-5"></i> 
+                                <span class="fs-6"><?= e($selectedBranch['name'] ?? 'Kaldis 4 Kilo') ?></span>
+                            </span>
+                            <span class="badge bg-gold text-white extra-small px-2 py-1">QR Branch</span>
+                        </div>
+                        <input type="hidden" name="branch_id" value="<?= e($selectedBranch['id'] ?? 1) ?>">
                     </div>
                     <div class="col-sm-5">
                         <label class="form-label fw-bold text-espresso small">

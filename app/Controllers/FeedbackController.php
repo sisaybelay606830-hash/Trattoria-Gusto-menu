@@ -15,6 +15,7 @@ use App\Helpers\Csrf;
 use App\Helpers\Session;
 use App\Repositories\BranchRepository;
 use App\Repositories\FeedbackRepository;
+use App\Repositories\SettingsRepository;
 
 class FeedbackController
 {
@@ -46,18 +47,81 @@ class FeedbackController
 
         if ($branchCode !== '') {
             $selectedBranch = $this->branchRepo->findByCode($branchCode);
+            if (!$selectedBranch) {
+                foreach ($branches as $b) {
+                    if (strcasecmp($b['code'], $branchCode) === 0 || (string)$b['id'] === $branchCode) {
+                        $selectedBranch = $b;
+                        break;
+                    }
+                }
+            }
         }
+
+        // If not specified via QR or session, check setting default_branch_code
+        if (!$selectedBranch) {
+            $defaultCode = (new SettingsRepository())->get('default_branch_code', '');
+            if (!empty($defaultCode)) {
+                $selectedBranch = $this->branchRepo->findByCode($defaultCode);
+            }
+        }
+
+        // Default MUST be 4 Kilo as required
+        if (!$selectedBranch) {
+            foreach ($branches as $b) {
+                if (stripos($b['code'], '4_KILO') !== false || stripos($b['code'], '4KILO') !== false || stripos($b['name'], '4 Kilo') !== false || stripos($b['name'], '4kilo') !== false) {
+                    $selectedBranch = $b;
+                    break;
+                }
+            }
+        }
+
+        // If 4 Kilo wasn't in active branches list, look up or create in DB
+        if (!$selectedBranch) {
+            $selectedBranch = $this->branchRepo->findByCode('4_KILO');
+            if (!$selectedBranch) {
+                try {
+                    $newId = $this->branchRepo->save([
+                        'code' => '4_KILO',
+                        'name' => 'Kaldis 4 Kilo',
+                        'address' => '4 Kilo, Near Addis Ababa University, Addis Ababa',
+                        'phone' => '+251 111 23 45 67',
+                        'is_active' => 1
+                    ]);
+                    $selectedBranch = $this->branchRepo->findById($newId);
+                } catch (\Throwable $e) {
+                    // ignore
+                }
+            }
+        }
+
+        // Final safety net: first branch or mock 4 Kilo
+        if (!$selectedBranch) {
+            $selectedBranch = !empty($branches) ? $branches[0] : [
+                'id' => 1,
+                'code' => '4_KILO',
+                'name' => 'Kaldis 4 Kilo',
+            ];
+        }
+
+        // Remember branch in session
+        if (!empty($selectedBranch['code'])) {
+            Session::set('current_branch_code', $selectedBranch['code']);
+        }
+
+        $settings = (new SettingsRepository())->getAll();
 
         View::render('feedback/index', [
             'branches'       => $branches,
             'selectedBranch' => $selectedBranch,
-            'branchCode'     => $branchCode,
+            'branch'         => $selectedBranch,
+            'settings'       => $settings,
+            'branchCode'     => $selectedBranch['code'] ?? $branchCode,
             'tableRef'       => $tableRef,
             'title'          => 'Customer Feedback — Kaldis Coffee',
             'csrf_token'     => Csrf::generate(),
             'errors'         => Session::flash('feedback_errors', []),
             'old'            => Session::flash('feedback_old', []),
-        ]);
+        ], 'base');
     }
 
     /**
@@ -77,6 +141,23 @@ class FeedbackController
         $comment       = trim((string)Request::post('comment', ''));
         $customerName  = trim((string)Request::post('customer_name', ''));
         $customerPhone = trim((string)Request::post('customer_phone', ''));
+
+        // Fallback for branchId if empty
+        if (empty($branchId)) {
+            $branchCode = Request::post('branch_code', '');
+            if (!empty($branchCode)) {
+                $b = $this->branchRepo->findByCode($branchCode);
+                if ($b) {
+                    $branchId = (string)$b['id'];
+                }
+            }
+            if (empty($branchId)) {
+                $kilo = $this->branchRepo->findByCode('4_KILO');
+                if ($kilo) {
+                    $branchId = (string)$kilo['id'];
+                }
+            }
+        }
 
         // Basic validation
         $errors = [];
@@ -147,9 +228,11 @@ class FeedbackController
      */
     public function thankYou(): void
     {
+        $settings = (new SettingsRepository())->getAll();
         View::render('feedback/success', [
-            'title' => 'Thank You — Kaldis Coffee Feedback',
-        ]);
+            'title'    => 'Thank You — Kaldis Coffee Feedback',
+            'settings' => $settings,
+        ], 'base');
     }
 }
 

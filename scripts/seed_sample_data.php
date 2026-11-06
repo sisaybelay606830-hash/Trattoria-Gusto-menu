@@ -68,6 +68,13 @@ $branches = [
         'is_active' => 1
     ],
     [
+        'code' => '4_KILO',
+        'name' => 'Kaldis 4 Kilo',
+        'address' => '4 Kilo, Near Addis Ababa University, Addis Ababa',
+        'phone' => '+251 111 23 45 67',
+        'is_active' => 1
+    ],
+    [
         'code' => 'AIRPORT_T2',
         'name' => 'Kaldis Bole Airport Terminal 2',
         'address' => 'Bole International Airport, Departures Level 2, Addis Ababa',
