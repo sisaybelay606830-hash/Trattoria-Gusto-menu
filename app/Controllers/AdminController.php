@@ -661,12 +661,69 @@ class AdminController
             'vat_rate'            => $vatRate,
             'items_per_page'      => (string) max(10, min(100, Request::int('items_per_page', 24))),
             'maintenance_mode'    => Request::post('maintenance_mode') !== null ? '1' : '0',
+            // Telegram Bot Configuration
+            'telegram_enabled'    => Request::post('telegram_enabled') !== null ? '1' : '0',
+            'telegram_bot_token'  => trim((string)Request::post('telegram_bot_token', '')),
+            'telegram_chat_id'    => trim((string)Request::post('telegram_chat_id', '')),
         ];
+
+        // Handle Brand Logo Upload
+        if (!empty($_FILES['custom_logo']['tmp_name']) && is_uploaded_file($_FILES['custom_logo']['tmp_name'])) {
+            $logoFile = $_FILES['custom_logo'];
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'];
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mime  = finfo_file($finfo, $logoFile['tmp_name']);
+            finfo_close($finfo);
+
+            if (in_array($mime, $allowedTypes, true)) {
+                $ext = pathinfo($logoFile['name'], PATHINFO_EXTENSION);
+                if (empty($ext)) $ext = 'png';
+                $logoFilename = 'brand_logo_' . time() . '.' . strtolower($ext);
+                $uploadDir = BASE_PATH . '/public/uploads/';
+                if (!is_dir($uploadDir)) {
+                    @mkdir($uploadDir, 0755, true);
+                }
+                if (move_uploaded_file($logoFile['tmp_name'], $uploadDir . $logoFilename)) {
+                    $kvp['custom_logo'] = 'uploads/' . $logoFilename;
+                }
+            } else {
+                Session::flash('error', 'Invalid logo image format. Allowed: PNG, JPG, WebP, SVG.');
+            }
+        } elseif (Request::post('remove_custom_logo') === '1') {
+            $kvp['custom_logo'] = '';
+        }
 
         $this->settingsRepo->setMany($kvp);
         AuditLog::record('settings_updated', 'settings', null, $kvp);
 
         Session::flash('success', 'Menu settings saved successfully.');
+        Response::redirect(base_url('admin/settings'));
+    }
+
+    public function settingsTelegramTest(): void
+    {
+        AuthMiddleware::requireAuth();
+        if (!Csrf::verify()) {
+            Session::flash('error', 'Invalid security token.');
+            Response::redirect(base_url('admin/settings'));
+        }
+
+        $botToken = trim((string)Request::post('telegram_bot_token', ''));
+        $chatId   = trim((string)Request::post('telegram_chat_id', ''));
+
+        if (empty($botToken) || empty($chatId)) {
+            $settings = $this->settingsRepo->getAll();
+            $botToken = $botToken ?: ($settings['telegram_bot_token']['value'] ?? '');
+            $chatId   = $chatId ?: ($settings['telegram_chat_id']['value'] ?? '');
+        }
+
+        $res = \App\Services\TelegramService::testConnection($botToken, $chatId);
+        if ($res['success']) {
+            Session::flash('success', $res['message']);
+        } else {
+            Session::flash('error', $res['message']);
+        }
+
         Response::redirect(base_url('admin/settings'));
     }
 

@@ -103,7 +103,7 @@ class FeedbackController
         }
 
         // Save feedback
-        $this->feedbackRepo->create([
+        $feedbackId = $this->feedbackRepo->create([
             'branch_id'      => !empty($branchId) ? (int)$branchId : null,
             'table_number'   => $tableNumber ?: null,
             'rating_overall' => $ratingOverall,
@@ -114,6 +114,24 @@ class FeedbackController
             'customer_name'  => $customerName ?: null,
             'customer_phone' => $customerPhone ?: null,
         ]);
+
+        // Send instant notification to Telegram group if enabled
+        try {
+            $branchObj = !empty($branchId) ? $this->branchRepo->findById((int)$branchId) : null;
+            \App\Services\TelegramService::sendFeedbackNotification([
+                'branch_name'    => $branchObj['name'] ?? null,
+                'table_number'   => $tableNumber ?: null,
+                'rating_overall' => $ratingOverall,
+                'rating_coffee'  => $ratingCoffee !== '' ? (int)$ratingCoffee : null,
+                'rating_food'    => $ratingFood !== '' ? (int)$ratingFood : null,
+                'rating_service' => $ratingService !== '' ? (int)$ratingService : null,
+                'comment'        => $comment ?: null,
+                'customer_name'  => $customerName ?: null,
+                'customer_phone' => $customerPhone ?: null,
+            ]);
+        } catch (\Throwable $e) {
+            \App\Helpers\Logger::error('FeedbackController: Telegram notify failed — ' . $e->getMessage());
+        }
 
         Response::redirect(base_url('feedback/thank-you'));
     }

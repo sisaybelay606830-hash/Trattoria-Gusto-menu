@@ -21,9 +21,19 @@
         <aside class="admin-sidebar" id="adminSidebar">
             <div class="sidebar-header p-3 d-flex align-items-center justify-content-between">
                 <a href="<?= base_url('admin/dashboard') ?>" class="text-decoration-none d-flex align-items-center gap-2">
-                    <div class="brand-crest" style="width: 36px; height: 36px;">
-                        <i class="bi bi-cup-hot-fill text-gold"></i>
-                    </div>
+                    <?php
+                        $adminCustomLogo = (new \App\Repositories\SettingsRepository())->get('custom_logo', '');
+                        $adminHasCustomLogo = !empty($adminCustomLogo) && file_exists(BASE_PATH . '/public/' . ltrim($adminCustomLogo, '/'));
+                    ?>
+                    <?php if ($adminHasCustomLogo): ?>
+                        <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm d-flex align-items-center justify-content-center bg-white" style="width: 36px; height: 36px; flex-shrink: 0;">
+                            <img src="<?= base_url($adminCustomLogo) ?>" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                    <?php else: ?>
+                        <div class="brand-crest" style="width: 36px; height: 36px;">
+                            <i class="bi bi-cup-hot-fill text-gold"></i>
+                        </div>
+                    <?php endif; ?>
                     <div>
                         <span class="fw-bold text-white fs-6 tracking-wide">KALDIS</span>
                         <span class="d-block text-gold extra-small fw-semibold">MENU ADMIN</span>

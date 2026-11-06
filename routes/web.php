@@ -60,8 +60,9 @@ Router::post('/admin/import/run',  [AdminController::class, 'importRun']);
 Router::get('/admin/import/logs',  [AdminController::class, 'importLogs']);
 
 // ── Admin — Settings ────────────────────────────────────────────────────────
-Router::get('/admin/settings',  [AdminController::class, 'settings']);
-Router::post('/admin/settings', [AdminController::class, 'settingsSave']);
+Router::get('/admin/settings',              [AdminController::class, 'settings']);
+Router::post('/admin/settings',             [AdminController::class, 'settingsSave']);
+Router::post('/admin/settings/telegram-test',[AdminController::class, 'settingsTelegramTest']);
 
 // ── Admin — Customer Feedbacks ───────────────────────────────────────────────
 Router::get('/admin/feedbacks',                         [AdminController::class, 'feedbacks']);

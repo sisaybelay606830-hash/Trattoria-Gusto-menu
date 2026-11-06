@@ -22,12 +22,22 @@
         <div class="container py-2">
             <div class="d-flex align-items-center justify-content-between">
                 <a href="<?= base_url('menu') ?>" class="text-decoration-none d-flex align-items-center gap-2">
-                    <div class="brand-crest">
-                        <i class="bi bi-cup-hot-fill text-gold"></i>
-                    </div>
+                    <?php 
+                        $customLogo = $settings['custom_logo']['value'] ?? ''; 
+                        $hasCustomLogo = !empty($customLogo) && file_exists(BASE_PATH . '/public/' . ltrim($customLogo, '/'));
+                    ?>
+                    <?php if ($hasCustomLogo): ?>
+                        <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm d-flex align-items-center justify-content-center bg-white" style="width: 44px; height: 44px;">
+                            <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                    <?php else: ?>
+                        <div class="brand-crest">
+                            <i class="bi bi-cup-hot-fill text-gold"></i>
+                        </div>
+                    <?php endif; ?>
                     <div>
-                        <span class="brand-title">KALDIS COFFEE</span>
-                        <span class="brand-tagline d-block">TRADITION & EXCELLENCE</span>
+                        <span class="brand-title"><?= e($settings['menu_title']['value'] ?? 'KALDIS COFFEE') ?></span>
+                        <span class="brand-tagline d-block"><?= e($settings['menu_subtitle']['value'] ?? 'TRADITION & EXCELLENCE') ?></span>
                     </div>
                 </a>
 
@@ -59,9 +69,15 @@
                     <i class="bi bi-star-fill me-1"></i> How was your experience? Leave Feedback
                 </a>
             </div>
-            <div class="brand-crest mx-auto mb-2" style="width: 36px; height: 36px;">
-                <i class="bi bi-cup-hot-fill text-gold" style="font-size: 1.1rem;"></i>
-            </div>
+            <?php if ($hasCustomLogo): ?>
+                <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm mx-auto mb-2 d-flex align-items-center justify-content-center bg-white" style="width: 40px; height: 40px;">
+                    <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+            <?php else: ?>
+                <div class="brand-crest mx-auto mb-2" style="width: 36px; height: 36px;">
+                    <i class="bi bi-cup-hot-fill text-gold" style="font-size: 1.1rem;"></i>
+                </div>
+            <?php endif; ?>
             <p class="mb-1 fw-semibold text-espresso">Kaldis Coffee PLC</p>
             <p class="text-muted small mb-2">The Birthplace of Coffee &middot; Crafted with Passion in Ethiopia</p>
             <p class="text-muted extra-small mb-0">&copy; <?= date('Y') ?> Kaldis Coffee PLC. All rights reserved.</p>
