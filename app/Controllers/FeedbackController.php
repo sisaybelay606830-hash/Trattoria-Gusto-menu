@@ -36,6 +36,11 @@ class FeedbackController
         $branchCode = Request::get('branch', '');
         $tableRef   = Request::get('table', '');
 
+        // If not specified in query string, fall back to current scanned branch from session
+        if ($branchCode === '') {
+            $branchCode = (string)Session::get('current_branch_code', '');
+        }
+
         $branches = $this->branchRepo->getActive();
         $selectedBranch = null;
 

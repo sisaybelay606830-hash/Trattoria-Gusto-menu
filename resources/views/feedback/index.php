@@ -38,18 +38,25 @@
                         <label class="form-label fw-bold text-espresso small">
                             <i class="bi bi-geo-alt-fill text-gold me-1"></i> Kaldis Branch
                         </label>
-                        <select name="branch_id" class="form-select rounded-3">
-                            <option value="">— Select Branch (Optional) —</option>
-                            <?php foreach ($branches as $b): ?>
-                                <?php 
-                                    $isSelected = ($selectedBranch && $selectedBranch['id'] === $b['id']) 
-                                               || ((int)($old['branch_id'] ?? 0) === $b['id']);
-                                ?>
-                                <option value="<?= e($b['id']) ?>" <?= $isSelected ? 'selected' : '' ?>>
-                                    <?= e($b['name']) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                        <?php if ($selectedBranch): ?>
+                            <div class="p-2 px-3 bg-gold-subtle text-gold-dark rounded-3 fw-bold d-flex align-items-center justify-content-between">
+                                <span><i class="bi bi-geo-alt-fill me-1"></i> <?= e($selectedBranch['name']) ?></span>
+                                <span class="badge bg-gold text-white extra-small">Auto-detected from QR</span>
+                            </div>
+                            <input type="hidden" name="branch_id" value="<?= e($selectedBranch['id']) ?>">
+                        <?php else: ?>
+                            <select name="branch_id" class="form-select rounded-3">
+                                <option value="">— Select Branch (Optional) —</option>
+                                <?php foreach ($branches as $b): ?>
+                                    <?php 
+                                        $isSelected = ((int)($old['branch_id'] ?? 0) === $b['id']);
+                                    ?>
+                                    <option value="<?= e($b['id']) ?>" <?= $isSelected ? 'selected' : '' ?>>
+                                        <?= e($b['name']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        <?php endif; ?>
                     </div>
                     <div class="col-sm-5">
                         <label class="form-label fw-bold text-espresso small">

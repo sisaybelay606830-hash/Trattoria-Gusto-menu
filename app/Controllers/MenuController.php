@@ -25,9 +25,15 @@ class MenuController
             return;
         }
 
-        // Branch from query string
+        // Branch from query string or session
         $branchCode = Request::str('branch');
-        $branch     = null;
+        if ($branchCode !== '') {
+            \App\Helpers\Session::set('current_branch_code', $branchCode);
+        } else {
+            $branchCode = (string)\App\Helpers\Session::get('current_branch_code', '');
+        }
+
+        $branch = null;
         if ($branchCode !== '') {
             $branch = (new BranchRepository())->findByCode($branchCode);
         }
