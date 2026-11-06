@@ -34,78 +34,65 @@ class FeedbackController
      */
     public function form(): void
     {
-        $branchCode = Request::get('branch', '');
-        $tableRef   = Request::get('table', '');
-
-        // If not specified in query string, fall back to current scanned branch from session
-        if ($branchCode === '') {
-            $branchCode = (string)Session::get('current_branch_code', '');
-        }
+        $rawBranch = Request::get('branch', '');
+        $tableRef  = Request::get('table', '');
 
         $branches = $this->branchRepo->getActive();
         $selectedBranch = null;
 
-        if ($branchCode !== '') {
-            $selectedBranch = $this->branchRepo->findByCode($branchCode);
-            if (!$selectedBranch) {
-                foreach ($branches as $b) {
-                    if (strcasecmp($b['code'], $branchCode) === 0 || (string)$b['id'] === $branchCode) {
-                        $selectedBranch = $b;
-                        break;
-                    }
-                }
+        // 1. HIGHEST PRIORITY: Explicit branch from scanned QR code parameter
+        if ($rawBranch !== '') {
+            $selectedBranch = $this->branchRepo->resolveBranch($rawBranch);
+            if ($selectedBranch) {
+                // Scanned QR explicitly defined this branch — remember in session
+                Session::set('current_branch_code', $selectedBranch['code']);
             }
         }
 
-        // If not specified via QR or session, check setting default_branch_code
+        // 2. SECOND PRIORITY: Current branch from session (if user scanned a menu QR earlier)
+        if (!$selectedBranch) {
+            $sessionBranch = (string)Session::get('current_branch_code', '');
+            if ($sessionBranch !== '') {
+                $selectedBranch = $this->branchRepo->resolveBranch($sessionBranch);
+            }
+        }
+
+        // 3. THIRD PRIORITY: Default branch configured in Admin Settings
         if (!$selectedBranch) {
             $defaultCode = (new SettingsRepository())->get('default_branch_code', '');
             if (!empty($defaultCode)) {
-                $selectedBranch = $this->branchRepo->findByCode($defaultCode);
+                $selectedBranch = $this->branchRepo->resolveBranch($defaultCode);
             }
         }
 
-        // Default MUST be 4 Kilo as required
+        // 4. FOURTH PRIORITY: Default to 4 Kilo branch
         if (!$selectedBranch) {
-            foreach ($branches as $b) {
-                if (stripos($b['code'], '4_KILO') !== false || stripos($b['code'], '4KILO') !== false || stripos($b['name'], '4 Kilo') !== false || stripos($b['name'], '4kilo') !== false) {
-                    $selectedBranch = $b;
-                    break;
-                }
-            }
+            $selectedBranch = $this->branchRepo->resolveBranch('4_KILO');
         }
 
-        // If 4 Kilo wasn't in active branches list, look up or create in DB
+        // 5. If 4 Kilo does not exist in DB yet, create it
         if (!$selectedBranch) {
-            $selectedBranch = $this->branchRepo->findByCode('4_KILO');
-            if (!$selectedBranch) {
-                try {
-                    $newId = $this->branchRepo->save([
-                        'code' => '4_KILO',
-                        'name' => 'Kaldis 4 Kilo',
-                        'address' => '4 Kilo, Near Addis Ababa University, Addis Ababa',
-                        'phone' => '+251 111 23 45 67',
-                        'is_active' => 1
-                    ]);
-                    $selectedBranch = $this->branchRepo->findById($newId);
-                } catch (\Throwable $e) {
-                    // ignore
-                }
+            try {
+                $newId = $this->branchRepo->save([
+                    'code'      => '4_KILO',
+                    'name'      => 'Kaldis 4 Kilo',
+                    'address'   => '4 Kilo, Near Addis Ababa University, Addis Ababa',
+                    'phone'     => '+251 111 23 45 67',
+                    'is_active' => 1
+                ]);
+                $selectedBranch = $this->branchRepo->findById($newId);
+            } catch (\Throwable $e) {
+                // ignore
             }
         }
 
-        // Final safety net: first branch or mock 4 Kilo
+        // 6. Final safety net: first active branch
         if (!$selectedBranch) {
             $selectedBranch = !empty($branches) ? $branches[0] : [
-                'id' => 1,
+                'id'   => 1,
                 'code' => '4_KILO',
                 'name' => 'Kaldis 4 Kilo',
             ];
-        }
-
-        // Remember branch in session
-        if (!empty($selectedBranch['code'])) {
-            Session::set('current_branch_code', $selectedBranch['code']);
         }
 
         $settings = (new SettingsRepository())->getAll();
@@ -115,7 +102,7 @@ class FeedbackController
             'selectedBranch' => $selectedBranch,
             'branch'         => $selectedBranch,
             'settings'       => $settings,
-            'branchCode'     => $selectedBranch['code'] ?? $branchCode,
+            'branchCode'     => $selectedBranch['code'] ?? '',
             'tableRef'       => $tableRef,
             'title'          => 'Customer Feedback — Kaldis Coffee',
             'csrf_token'     => Csrf::generate(),

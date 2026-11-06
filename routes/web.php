@@ -13,7 +13,16 @@ use App\Controllers\AdminController;
 use App\Controllers\FeedbackController;
 
 // ── Public ──────────────────────────────────────────────────────────────────
-Router::get('/',                    fn() => Response::redirect(base_url('menu')));
+Router::get('/', function() {
+    $branch = \App\Helpers\Request::get('branch', '');
+    if ($branch !== '') {
+        $resolved = (new \App\Repositories\BranchRepository())->resolveBranch($branch);
+        $code = $resolved ? $resolved['code'] : $branch;
+        \App\Helpers\Session::set('current_branch_code', $code);
+    }
+    $qs = !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
+    \App\Helpers\Response::redirect(base_url('menu') . $qs);
+});
 Router::get('/menu',                [MenuController::class, 'index']);
 Router::get('/menu/{branch}',       [MenuController::class, 'branch']);
 Router::get('/feedback',            [FeedbackController::class, 'form']);

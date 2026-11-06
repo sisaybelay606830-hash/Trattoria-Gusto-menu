@@ -41,6 +41,56 @@ class BranchRepository
         return $row ?: null;
     }
 
+    /**
+     * Resolve a branch by code, ID, name, or slug.
+     */
+    public function resolveBranch(string|int|null $ref): ?array
+    {
+        if (empty($ref)) {
+            return null;
+        }
+        $refStr = trim((string)$ref);
+        if ($refStr === '') {
+            return null;
+        }
+
+        // 1. Direct code lookup
+        $b = $this->findByCode($refStr);
+        if ($b) {
+            return $b;
+        }
+
+        // 2. Numeric ID lookup
+        if (is_numeric($refStr)) {
+            $b = $this->findById((int)$refStr);
+            if ($b) {
+                return $b;
+            }
+        }
+
+        // 3. Match against active branches
+        $active = $this->getActive();
+        foreach ($active as $item) {
+            if (strcasecmp($item['code'], $refStr) === 0 || strcasecmp($item['name'], $refStr) === 0) {
+                return $item;
+            }
+        }
+
+        // 4. Normalized slug / substring comparison
+        $cleanRef = preg_replace('/[^a-z0-9]/', '', strtolower($refStr));
+        if ($cleanRef !== '') {
+            foreach ($active as $item) {
+                $cleanCode = preg_replace('/[^a-z0-9]/', '', strtolower($item['code']));
+                $cleanName = preg_replace('/[^a-z0-9]/', '', strtolower($item['name']));
+                if ($cleanCode === $cleanRef || str_contains($cleanCode, $cleanRef) || str_contains($cleanRef, $cleanCode) || str_contains($cleanName, $cleanRef)) {
+                    return $item;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public function save(array $data): int
     {
         $pdo = Database::local();

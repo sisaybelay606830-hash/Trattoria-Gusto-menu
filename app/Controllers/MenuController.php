@@ -26,16 +26,19 @@ class MenuController
         }
 
         // Branch from query string or session
-        $branchCode = Request::str('branch');
-        if ($branchCode !== '') {
+        $rawBranch = Request::str('branch');
+        $branchRepo = new BranchRepository();
+        $branch = null;
+
+        if ($rawBranch !== '') {
+            $branch = $branchRepo->resolveBranch($rawBranch);
+            $branchCode = $branch ? $branch['code'] : $rawBranch;
             \App\Helpers\Session::set('current_branch_code', $branchCode);
         } else {
             $branchCode = (string)\App\Helpers\Session::get('current_branch_code', '');
-        }
-
-        $branch = null;
-        if ($branchCode !== '') {
-            $branch = (new BranchRepository())->findByCode($branchCode);
+            if ($branchCode !== '') {
+                $branch = $branchRepo->resolveBranch($branchCode);
+            }
         }
 
         // Categories

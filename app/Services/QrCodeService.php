@@ -30,6 +30,15 @@ class QrCodeService
         }
     }
 
+    private function getMenuBaseUrl(): string
+    {
+        $base = $this->baseUrl;
+        if (!str_ends_with($base, '/menu') && !str_ends_with($base, '/menu/')) {
+            $base = rtrim($base, '/') . '/menu';
+        }
+        return $base;
+    }
+
     // ---------------------------------------------------------------- Generate
 
     /**
@@ -37,7 +46,7 @@ class QrCodeService
      */
     public function generateGeneral(string $label = 'General Menu'): array
     {
-        $url = $this->baseUrl;
+        $url = $this->getMenuBaseUrl();
         return $this->generate($label, 'general', $url, null);
     }
 
@@ -51,7 +60,7 @@ class QrCodeService
     public function generateBranch(int $branchId, string $branchCode, string $label): array
     {
         // Use branch code (not internal ID) in the URL
-        $url = $this->baseUrl . '?branch=' . urlencode($branchCode);
+        $url = $this->getMenuBaseUrl() . '?branch=' . urlencode($branchCode);
         return $this->generate($label, 'branch', $url, $branchId);
     }
 
@@ -60,7 +69,7 @@ class QrCodeService
      */
     public function generateTable(int $branchId, string $branchCode, string $tableRef, string $label): array
     {
-        $url = $this->baseUrl . '?branch=' . urlencode($branchCode) . '&table=' . urlencode($tableRef);
+        $url = $this->getMenuBaseUrl() . '?branch=' . urlencode($branchCode) . '&table=' . urlencode($tableRef);
         return $this->generate($label, 'table', $url, $branchId, $tableRef);
     }
 
