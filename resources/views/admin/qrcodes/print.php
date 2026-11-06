@@ -69,12 +69,37 @@
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
             border: 1px solid #e8ded2;
             margin-bottom: 1.25rem;
+            position: relative;
         }
 
         .qr-image {
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             display: block;
+        }
+
+        .qr-center-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 52px;
+            height: 52px;
+            background: #ffffff;
+            border-radius: 50%;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 2px solid #c69214;
+        }
+
+        .qr-center-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .instruction-badge {
@@ -128,16 +153,34 @@
 </head>
 <body>
     <div>
+        <?php 
+            $settingsRepo = new \App\Repositories\SettingsRepository();
+            $customLogo = $settingsRepo->get('custom_logo', '');
+            $hasCustomLogo = !empty($customLogo) && file_exists(BASE_PATH . '/public/' . ltrim($customLogo, '/'));
+        ?>
         <div class="print-card">
-            <div class="crest">
-                <i class="bi bi-cup-hot-fill text-warning fs-3"></i>
-            </div>
+            <?php if ($hasCustomLogo): ?>
+                <div class="crest" style="background: #ffffff; border: 2px solid #c69214; padding: 4px;">
+                    <img src="<?= base_url($customLogo) ?>" alt="Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
+                </div>
+            <?php else: ?>
+                <div class="crest">
+                    <i class="bi bi-cup-hot-fill text-warning fs-3"></i>
+                </div>
+            <?php endif; ?>
             <div class="brand-title">KALDIS COFFEE</div>
             <div class="brand-tag">TRADITION & EXCELLENCE  &middot; ETHIOPIA</div>
 
             <div class="qr-wrapper">
                 <?php if (!empty($previewBase64)): ?>
                     <img src="<?= $previewBase64 ?>" alt="QR Code" class="qr-image">
+                    <div class="qr-center-logo">
+                        <?php if ($hasCustomLogo): ?>
+                            <img src="<?= base_url($customLogo) ?>" alt="Logo">
+                        <?php else: ?>
+                            <i class="bi bi-cup-hot-fill text-gold" style="font-size: 1.4rem;"></i>
+                        <?php endif; ?>
+                    </div>
                 <?php else: ?>
                     <p class="text-danger small mb-0">QR Code image unavailable.</p>
                 <?php endif; ?>

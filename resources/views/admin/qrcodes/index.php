@@ -25,9 +25,22 @@
                             <?php foreach ($qrcodes as $qr): ?>
                                 <tr>
                                     <td>
-                                        <?php $preview = $service->getBase64Preview((int)$qr['id']); ?>
+                                        <?php 
+                                            $preview = $service->getBase64Preview((int)$qr['id']);
+                                            $customLogo = (new \App\Repositories\SettingsRepository())->get('custom_logo', '');
+                                            $hasCustomLogo = !empty($customLogo) && file_exists(BASE_PATH . '/public/' . ltrim($customLogo, '/'));
+                                        ?>
                                         <?php if ($preview): ?>
-                                            <img src="<?= $preview ?>" alt="QR" class="rounded border p-1 bg-white" style="width: 54px; height: 54px;">
+                                            <div class="position-relative d-inline-block" style="width: 56px; height: 56px;">
+                                                <img src="<?= $preview ?>" alt="QR" class="rounded border p-1 bg-white w-100 h-100">
+                                                <div class="position-absolute top-50 start-50 translate-middle bg-white rounded-circle shadow-sm border border-gold d-flex align-items-center justify-content-center overflow-hidden" style="width: 18px; height: 18px; padding: 1px;">
+                                                    <?php if ($hasCustomLogo): ?>
+                                                        <img src="<?= base_url($customLogo) ?>" alt="logo" style="width: 100%; height: 100%; object-fit: contain;">
+                                                    <?php else: ?>
+                                                        <i class="bi bi-cup-hot-fill text-gold" style="font-size: 0.55rem;"></i>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
                                         <?php else: ?>
                                             <div class="rounded border p-1 bg-light d-flex align-items-center justify-content-center text-muted" style="width: 54px; height: 54px;">
                                                 <i class="bi bi-qr-code"></i>
