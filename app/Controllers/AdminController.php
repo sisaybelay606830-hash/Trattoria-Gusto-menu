@@ -679,12 +679,20 @@ class AdminController
                 $ext = pathinfo($logoFile['name'], PATHINFO_EXTENSION);
                 if (empty($ext)) $ext = 'png';
                 $logoFilename = 'brand_logo_' . time() . '.' . strtolower($ext);
-                $uploadDir = BASE_PATH . '/public/uploads/';
+
+                // Determine upload directory: check if running from public/ or root
+                $uploadDir = is_dir(BASE_PATH . '/public') 
+                    ? BASE_PATH . '/public/uploads/' 
+                    : BASE_PATH . '/uploads/';
+
                 if (!is_dir($uploadDir)) {
                     @mkdir($uploadDir, 0755, true);
                 }
+
                 if (move_uploaded_file($logoFile['tmp_name'], $uploadDir . $logoFilename)) {
                     $kvp['custom_logo'] = 'uploads/' . $logoFilename;
+                } else {
+                    Session::flash('error', 'Failed to save logo. Please ensure uploads/ directory is writable (permission 755).');
                 }
             } else {
                 Session::flash('error', 'Invalid logo image format. Allowed: PNG, JPG, WebP, SVG.');
