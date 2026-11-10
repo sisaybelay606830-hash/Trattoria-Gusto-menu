@@ -38,13 +38,33 @@ body.kaldis-app {
     -webkit-font-smoothing: antialiased;
 }
 
-.text-espresso { color: var(--kaldis-espresso) !important; }
-.text-gold { color: var(--kaldis-gold) !important; }
-.text-gold-dark { color: #8f6507 !important; }
-.text-gold-light { color: #e9c158 !important; }
-.bg-gold-subtle { background-color: var(--kaldis-gold-subtle) !important; }
-.extra-small { font-size: 0.75rem; }
-.tracking-wide { letter-spacing: 0.08em; }
+.text-espresso {
+    color: var(--kaldis-espresso) !important;
+}
+
+.text-gold {
+    color: var(--kaldis-gold) !important;
+}
+
+.text-gold-dark {
+    color: #8f6507 !important;
+}
+
+.text-gold-light {
+    color: #e9c158 !important;
+}
+
+.bg-gold-subtle {
+    background-color: var(--kaldis-gold-subtle) !important;
+}
+
+.extra-small {
+    font-size: 0.75rem;
+}
+
+.tracking-wide {
+    letter-spacing: 0.08em;
+}
 
 /* Header & Crest */
 .kaldis-header {
@@ -120,7 +140,8 @@ body.kaldis-app {
     transition: all 0.2s ease;
 }
 
-.btn-gold:hover, .btn-gold:focus {
+.btn-gold:hover,
+.btn-gold:focus {
     background-color: var(--kaldis-gold-hover);
     color: #ffffff;
     transform: translateY(-1px);
@@ -403,7 +424,7 @@ body.admin-body {
     border-radius: var(--radius-md);
     border: 1px solid #e1e4e8;
     padding: 1.25rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .stat-icon {
@@ -425,9 +446,9 @@ body.admin-body {
         bottom: 0;
         transform: translateX(-100%);
     }
+
     .admin-sidebar.show {
         transform: translateX(0);
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
 }
-

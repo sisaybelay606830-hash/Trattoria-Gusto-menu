@@ -7,11 +7,10 @@
 -- Filter: [gslTypeId] = 13 AND [isActive] = 1 AND [articleCode] IS NOT NULL
 -- ============================================================
 
-CREATE DATABASE IF NOT EXISTS `kaldisbp_cnet_synced_data`
+CREATE DATABASE IF NOT EXISTS `kaldisbp_trattoriabp_cnet_synced_data`
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
-
-USE `kaldisbp_cnet_synced_data`;
+E `kaldisbp_alditrataorisbp_cnet_synced_data`;
 
 DROP TABLE IF EXISTS `article_import`;
 

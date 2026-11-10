@@ -18,6 +18,22 @@ if (!function_exists('base_url')) {
     }
 }
 
+if (!function_exists('asset_url')) {
+    /**
+     * Build an asset URL with automatic cache-busting (filemtime).
+     * Guarantees the browser always loads the freshest CSS/JS upon changes.
+     */
+    function asset_url(string $path = ''): string
+    {
+        $base = base_url($path);
+        $fullPath = defined('BASE_PATH') ? BASE_PATH . '/public/' . ltrim($path, '/') : '';
+        if ($fullPath && file_exists($fullPath)) {
+            return $base . '?v=' . filemtime($fullPath);
+        }
+        return $base . '?v=' . time();
+    }
+}
+
 if (!function_exists('e')) {
     /**
      * Safely escape a value for HTML output.

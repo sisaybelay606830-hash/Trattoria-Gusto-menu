@@ -21,4 +21,5 @@ Thumbs.db
 
 # ---- Compiled ----
 *.phar
+*.zip
 

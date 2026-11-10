@@ -8,7 +8,24 @@ declare(strict_types=1);
 
 define('BASE_PATH', dirname(__DIR__));
 
-require BASE_PATH . '/vendor/autoload.php';
+if (file_exists(BASE_PATH . '/vendor/autoload.php')) {
+    require BASE_PATH . '/vendor/autoload.php';
+} else {
+    // Built-in PSR-4 fallback autoloader for App\ namespace
+    spl_autoload_register(function (string $class): void {
+        $prefix = 'App\\';
+        $baseDir = BASE_PATH . '/app/';
+        $len = strlen($prefix);
+        if (strncmp($prefix, $class, $len) !== 0) {
+            return;
+        }
+        $relativeClass = substr($class, $len);
+        $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
+        if (file_exists($file)) {
+            require $file;
+        }
+    });
+}
 require_once BASE_PATH . '/app/Helpers/functions.php';
 
 use App\Helpers\Env;
