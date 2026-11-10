@@ -18,7 +18,7 @@ Session::start();
 // Mock logged-in administrator session
 Session::set('user_id', 1);
 Session::set('user_name', 'Administrator');
-Session::set('user_email', 'admin@kaldis.coffee');
+Session::set('user_email', 'admin@trattoriagusto.com');
 Session::set('user_role', 'administrator');
 
 function testRoute(string $method, string $uri, array $getParams = []): void {

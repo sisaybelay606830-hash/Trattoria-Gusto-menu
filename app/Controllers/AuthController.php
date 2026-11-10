@@ -16,7 +16,7 @@ class AuthController
     {
         AuthMiddleware::requireGuest();
         View::render('auth/login', [
-            'title' => 'Admin Login — Kaldis Coffee',
+            'title' => 'Admin Login — Trattoria Gusto',
             'error' => Session::getFlash('error'),
         ], 'base');
     }

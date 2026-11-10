@@ -1,8 +1,8 @@
 <?php
 /**
- * Sample Data Seeder for Kaldis Coffee PLC Digital Menu
+ * Sample Data Seeder for Trattoria Gusto Digital Menu
  *
- * Populates the local database with realistic Kaldis Coffee products, categories,
+ * Populates the local database with realistic Trattoria Gusto products, categories,
  * and branches for local development and demonstration when the remote source
  * database is inaccessible or in testing environments.
  *
@@ -20,7 +20,7 @@ use App\Helpers\Database;
 
 Env::load(BASE_PATH . '/.env');
 
-echo "=== Kaldis Coffee PLC — Sample Data Seeder ===\n";
+echo "=== Trattoria Gusto — Sample Data Seeder ===\n";
 
 $pdo = Database::local();
 $clear = in_array('--clear', $argv ?? [], true);
@@ -41,42 +41,42 @@ if ($clear) {
 $branches = [
     [
         'code' => 'BOLE_MED',
-        'name' => 'Kaldis Bole Medhanialem',
+        'name' => 'Trattoria Gusto Bole Medhanialem',
         'address' => 'Cameroon St, Next to Medhanialem Mall, Bole, Addis Ababa',
         'phone' => '+251 116 61 77 00',
         'is_active' => 1
     ],
     [
         'code' => 'KAZANCHIS',
-        'name' => 'Kaldis Kazanchis (Intercontinental)',
+        'name' => 'Trattoria Gusto Kazanchis (Intercontinental)',
         'address' => 'Jomo Kenyatta St, Near UNECA & Intercontinental Hotel, Addis Ababa',
         'phone' => '+251 115 50 44 22',
         'is_active' => 1
     ],
     [
         'code' => 'SARBET',
-        'name' => 'Kaldis Sarbet',
+        'name' => 'Trattoria Gusto Sarbet',
         'address' => 'Roosevelt St, Near AU Headquarters, Sarbet, Addis Ababa',
         'phone' => '+251 113 72 88 11',
         'is_active' => 1
     ],
     [
         'code' => 'PIASSA',
-        'name' => 'Kaldis Piassa Churchil',
+        'name' => 'Trattoria Gusto Piassa Churchil',
         'address' => 'Churchill Ave, Arada Sub-City, Addis Ababa',
         'phone' => '+251 111 56 33 44',
         'is_active' => 1
     ],
     [
         'code' => '4_KILO',
-        'name' => 'Kaldis 4 Kilo',
+        'name' => 'Trattoria Gusto 4 Kilo',
         'address' => '4 Kilo, Near Addis Ababa University, Addis Ababa',
         'phone' => '+251 111 23 45 67',
         'is_active' => 1
     ],
     [
         'code' => 'AIRPORT_T2',
-        'name' => 'Kaldis Bole Airport Terminal 2',
+        'name' => 'Trattoria Gusto Bole Airport Terminal 2',
         'address' => 'Bole International Airport, Departures Level 2, Addis Ababa',
         'phone' => '+251 116 65 12 34',
         'is_active' => 1
@@ -106,7 +106,7 @@ $menuData = [
                 'items' => [
                     [
                         'code' => 'KLD-HB-001',
-                        'name' => 'Kaldis Traditional Macchiato',
+                        'name' => 'Trattoria Traditional Macchiato',
                         'desc' => 'Our signature Ethiopian roast espresso layered with velvety steamed local whole milk foam.',
                         'price' => 75.00,
                         'unit' => 'Cup',
@@ -133,7 +133,7 @@ $menuData = [
                     ],
                     [
                         'code' => 'KLD-HB-004',
-                        'name' => 'Kaldis Cappuccino',
+                        'name' => 'Trattoria Cappuccino',
                         'desc' => 'Equal parts dark espresso, steamed fresh milk, and rich microfoam dusted with organic cocoa powder.',
                         'price' => 85.00,
                         'unit' => 'Cup',
@@ -187,7 +187,7 @@ $menuData = [
                 'items' => [
                     [
                         'code' => 'KLD-CB-001',
-                        'name' => 'Kaldis Iced Caramel Macchiato',
+                        'name' => 'Trattoria Iced Caramel Macchiato',
                         'desc' => 'Chilled milk marked with espresso, sweetened with vanilla syrup and topped with caramel drizzle over ice.',
                         'price' => 120.00,
                         'unit' => 'Glass',
@@ -343,7 +343,7 @@ $menuData = [
                 'items' => [
                     [
                         'code' => 'KLD-FD-001',
-                        'name' => 'Kaldis Special Club Sandwich',
+                        'name' => 'Trattoria Special Club Sandwich',
                         'desc' => 'Triple-decker toasted bread with roasted chicken breast, beef bacon, boiled egg, lettuce, tomato, and seasoned fries.',
                         'price' => 280.00,
                         'unit' => 'Plate',

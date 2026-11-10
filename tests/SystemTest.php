@@ -1,6 +1,6 @@
 <?php
 /**
- * Kaldis Coffee PLC — Automated System & Integration Test
+ * Trattoria Gusto — Automated System & Integration Test
  *
  * Verifies all critical application components:
  * 1. Database connectivity & schema tables
@@ -39,7 +39,7 @@ class SystemTest
     public function run(): void
     {
         echo "======================================================\n";
-        echo " Kaldis Coffee PLC — Digital Menu System Test Suite   \n";
+        echo " Trattoria Gusto — Digital Menu System Test Suite   \n";
         echo "======================================================\n\n";
 
         $this->testDatabaseConnection();
@@ -129,7 +129,7 @@ class SystemTest
     private function testAdminUserAuthentication(): void
     {
         $stmt = Database::local()->prepare("SELECT * FROM users WHERE email = ? LIMIT 1");
-        $stmt->execute(['admin@kaldis.coffee']);
+        $stmt->execute(['admin@trattoriagusto.com']);
         $user = $stmt->fetch();
 
         $this->assert("Default Admin User Exists", (bool)$user);

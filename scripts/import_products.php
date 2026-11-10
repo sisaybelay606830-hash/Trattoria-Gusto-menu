@@ -26,7 +26,7 @@ $dryRun = in_array('--dry-run', $argv ?? [], true);
 $force  = in_array('--force', $argv ?? [], true);
 
 echo "======================================================\n";
-echo " Kaldis Coffee PLC — Product Import & Synchronization \n";
+echo " Trattoria Gusto — Product Import & Synchronization \n";
 echo "======================================================\n";
 echo "Mode: " . ($dryRun ? "DRY-RUN (no local writes)" : "LIVE SYNC") . "\n";
 echo "Time: " . date('Y-m-d H:i:s') . "\n\n";

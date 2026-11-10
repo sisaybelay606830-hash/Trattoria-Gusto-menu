@@ -1,6 +1,6 @@
-# Kaldis Coffee PLC — Digital Menu System
+# Trattoria Gusto — Digital Menu System
 
-A complete, production-oriented digital menu system for Kaldis Coffee PLC.
+A complete, production-oriented digital menu system for Trattoria Gusto.
 Customers scan a QR code and instantly browse the menu on any device — no app required.
 
 ---
@@ -272,5 +272,5 @@ mysql -u root -p kaldis_menu < backup_YYYYMMDD.sql
 
 ## License
 
-Proprietary — Kaldis Coffee PLC
+Proprietary — Trattoria Gusto
 

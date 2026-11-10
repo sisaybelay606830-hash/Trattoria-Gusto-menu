@@ -118,7 +118,7 @@ class TelegramService
         $msg .= "📞 <b>Phone:</b> {$phone}\n";
         $msg .= "⏰ <b>Submitted:</b> {$date}\n";
         $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
-        $msg .= "<i>Kaldis Coffee PLC Digital Menu</i>";
+        $msg .= "<i>Trattoria Gusto Digital Menu</i>";
 
         return self::sendMessage($msg);
     }
@@ -140,7 +140,7 @@ class TelegramService
         }
 
         $url = "https://api.telegram.org/bot{$botToken}/sendMessage";
-        $testMsg = "☕ <b>Kaldis Coffee PLC — Telegram Bot Connected!</b>\n\nThis is a test message confirming that your feedback notifications will be delivered here.";
+        $testMsg = "☕ <b>Trattoria Gusto — Telegram Bot Connected!</b>\n\nThis is a test message confirming that your feedback notifications will be delivered here.";
 
         $data = [
             'chat_id'    => $chatId,

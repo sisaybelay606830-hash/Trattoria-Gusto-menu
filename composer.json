@@ -1,6 +1,6 @@
 {
-    "name": "kaldis/digital-menu",
-    "description": "Kaldis Coffee PLC Digital Menu System",
+    "name": "trattoria-gusto/digital-menu",
+    "description": "Trattoria Gusto Digital Menu System",
     "type": "project",
     "license": "proprietary",
     "require": {

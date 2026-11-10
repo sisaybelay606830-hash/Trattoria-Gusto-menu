@@ -15,7 +15,7 @@
             
             <?php if ($hasCustomLogo): ?>
                 <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm mx-auto mb-4 d-flex align-items-center justify-content-center bg-white border border-gold" style="width: 80px; height: 80px; padding: 3px;">
-                    <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
+                    <img src="<?= base_url($customLogo) ?>" alt="Trattoria Gusto Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
                 </div>
             <?php else: ?>
                 <div class="success-icon-wrap mx-auto mb-4 d-flex align-items-center justify-content-center bg-gold-subtle rounded-circle" style="width: 80px; height: 80px;">
@@ -27,7 +27,7 @@
             <h5 class="text-gold fw-semibold mb-3">Ameseginalew! / እናመሰግናለን!</h5>
 
             <p class="text-muted mb-4 lead">
-                Your feedback has been received and shared directly with the Kaldis Coffee management team. We truly value your support in helping us maintain the finest coffee tradition.
+                Your feedback has been received and shared directly with the Trattoria Gusto management team. We truly value your support in helping us maintain the finest dining and coffee tradition.
             </p>
 
             <div class="d-grid gap-2">
@@ -37,7 +37,7 @@
             </div>
 
             <div class="mt-4 pt-3 border-top text-muted extra-small">
-                Kaldis Coffee PLC &bull; Addis Ababa, Ethiopia
+                Trattoria Gusto &bull; Addis Ababa, Ethiopia
             </div>
         </div>
     </div>

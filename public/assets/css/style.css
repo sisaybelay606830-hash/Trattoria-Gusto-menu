@@ -1,5 +1,5 @@
 /**
- * Kaldis Coffee PLC — Digital Menu System
+ * Trattoria Gusto — Digital Menu System
  * Brand Styling & Theme
  */
 
@@ -30,6 +30,7 @@
 }
 
 /* Base & Typography */
+body.trattoria-app,
 body.kaldis-app {
     background-color: var(--kaldis-warm-bg);
     color: var(--kaldis-text);
@@ -67,6 +68,7 @@ body.kaldis-app {
 }
 
 /* Header & Crest */
+.trattoria-header,
 .kaldis-header {
     background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(12px);

@@ -16,7 +16,7 @@
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 bg-espresso text-white text-center p-4">
             <?php if ($hasCustomLogo): ?>
                 <div class="brand-logo-wrap rounded-circle overflow-hidden shadow-sm mx-auto mb-3 d-flex align-items-center justify-content-center bg-white" style="width: 70px; height: 70px; border: 2px solid #c69214; padding: 3px;">
-                    <img src="<?= base_url($customLogo) ?>" alt="Kaldis Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
+                    <img src="<?= base_url($customLogo) ?>" alt="Trattoria Gusto Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 50%;">
                 </div>
             <?php else: ?>
                 <div class="brand-crest mx-auto mb-3" style="width: 52px; height: 52px; font-size: 1.5rem;">
@@ -25,7 +25,7 @@
             <?php endif; ?>
             <h3 class="font-playfair text-gold fw-bold mb-1">Your Voice Matters to Us</h3>
             <p class="text-white-50 mb-0 small">
-                Help Kaldis Coffee elevate your coffee & dining experience. We read every single review!
+                Help Trattoria Gusto elevate your dining & culinary experience. We read every single review!
             </p>
         </div>
 
@@ -51,12 +51,12 @@
                 <div class="row g-3 mb-4">
                     <div class="col-sm-7">
                         <label class="form-label fw-bold text-espresso small">
-                            <i class="bi bi-geo-alt-fill text-gold me-1"></i> Kaldis Branch
+                            <i class="bi bi-geo-alt-fill text-gold me-1"></i> Branch
                         </label>
                         <div class="p-2 px-3 bg-gold-subtle text-gold-dark rounded-3 fw-bold d-flex align-items-center justify-content-between border border-gold-subtle shadow-sm">
                             <span class="d-flex align-items-center gap-2">
                                 <i class="bi bi-geo-alt-fill text-gold fs-5"></i> 
-                                <span class="fs-6"><?= e($selectedBranch['name'] ?? 'Kaldis 4 Kilo') ?></span>
+                                <span class="fs-6"><?= e($selectedBranch['name'] ?? 'Trattoria Gusto') ?></span>
                             </span>
                             <span class="badge bg-gold text-white extra-small px-2 py-1">QR Branch</span>
                         </div>
@@ -191,7 +191,7 @@ document += window.addEventListener('DOMContentLoaded', function() {
         2: 'Fair — Room for improvement',
         3: 'Good — Met expectations',
         4: 'Very Good — Really enjoyed it!',
-        5: 'Excellent — Kaldis at its best!'
+        5: 'Excellent — Trattoria Gusto at its best!'
     };
 
     // Overall Star Rating interactive selector

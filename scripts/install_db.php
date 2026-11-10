@@ -1,7 +1,7 @@
 <?php
 /**
  * Database installer script
- * Creates the local kaldis_menu database and runs all migrations.
+ * Creates the local database and runs all migrations.
  *
  * Usage: php scripts/install_db.php [--force]
  */
@@ -24,7 +24,7 @@ $dbName = Env::getString('APP_DB_NAME', 'kaldis_menu');
 $user   = Env::getString('APP_DB_USER', 'root');
 $pass   = Env::getString('APP_DB_PASSWORD', '');
 
-echo "=== Kaldis Menu — Database Installer ===\n";
+echo "=== Trattoria Gusto — Database Installer ===\n";
 echo "Target: {$user}@{$host}:{$port} / {$dbName}\n\n";
 
 // ── Connect without database selected first ────────────────────────────────
@@ -121,14 +121,14 @@ foreach ($files as $file) {
 $checkUser = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
 if ((int)$checkUser === 0) {
     echo "\n[INFO] No users found. Creating default admin account...\n";
-    $defaultPass = 'Admin@Kaldis2024';
+    $defaultPass = 'Admin@Gusto2026';
     $hash = password_hash($defaultPass, PASSWORD_BCRYPT, ['cost' => 12]);
     $stmt = $pdo->prepare(
         "INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, 'administrator')"
     );
-    $stmt->execute(['Administrator', 'admin@kaldis.coffee', $hash]);
+    $stmt->execute(['Administrator', 'admin@trattoriagusto.com', $hash]);
     echo "[OK] Default admin created:\n";
-    echo "     Email   : admin@kaldis.coffee\n";
+    echo "     Email   : admin@trattoriagusto.com\n";
     echo "     Password: {$defaultPass}\n";
     echo "     ** CHANGE THIS PASSWORD IMMEDIATELY AFTER FIRST LOGIN **\n";
 }

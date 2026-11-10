@@ -79,7 +79,7 @@
 
                     <div class="mb-3">
                         <label for="email" class="form-label small fw-semibold text-espresso">Email Address</label>
-                        <input type="email" class="form-control form-control-sm" id="email" name="email" required placeholder="staff@kaldis.coffee">
+                        <input type="email" class="form-control form-control-sm" id="email" name="email" required placeholder="staff@trattoriagusto.com">
                     </div>
 
                     <div class="mb-3">

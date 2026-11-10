@@ -25,7 +25,7 @@ class Session
             return;
         }
         $cfg = require dirname(__DIR__, 2) . '/config/app.php';
-        session_name($cfg['session']['name'] ?? 'kaldis_session');
+        session_name($cfg['session']['name'] ?? 'trattoria_gusto_session');
         session_set_cookie_params([
             'lifetime' => 0,            // Browser-session cookie
             'path'     => '/',

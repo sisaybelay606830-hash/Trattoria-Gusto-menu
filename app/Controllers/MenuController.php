@@ -62,7 +62,7 @@ class MenuController
         $products   = (new ProductRepository())->findAll($filters, 1, 9999);
         $showPrices = ($settings['show_prices']['value'] ?? '0') === '1';
 
-        $title = e($settings['menu_title']['value'] ?? 'Kaldis Coffee')
+        $title = e($settings['menu_title']['value'] ?? 'Trattoria Gusto')
                . ' — '
                . e($settings['menu_subtitle']['value'] ?? 'Digital Menu');
 

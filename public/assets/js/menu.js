@@ -1,5 +1,5 @@
 /**
- * Kaldis Coffee PLC — Digital Menu System
+ * Trattoria Gusto — Digital Menu System
  * Client-Side Interactive Filtering, Search & Layout Reliability
  */
 
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const emptyState = document.getElementById('menuEmptyState');
     const searchClearBtn = document.getElementById('searchClearBtn');
     const activeResultsCount = document.getElementById('activeResultsCount');
-    const header = document.querySelector('.kaldis-header');
+    const header = document.querySelector('.kaldis-header, .trattoria-header');
 
     // 1. Header scroll effect for glassmorphism
     if (header) {

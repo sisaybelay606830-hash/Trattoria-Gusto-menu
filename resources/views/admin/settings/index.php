@@ -29,7 +29,7 @@
                                 <?php if (!empty($settings['custom_logo']['value'])): ?>
                                     <div class="form-check mt-1">
                                         <input class="form-check-input" type="checkbox" id="remove_custom_logo" name="remove_custom_logo" value="1">
-                                        <label class="form-check-label extra-small text-danger" for="remove_custom_logo">Remove custom logo and restore default Kaldis crest</label>
+                                        <label class="form-check-label extra-small text-danger" for="remove_custom_logo">Remove custom logo and restore default Trattoria Gusto crest</label>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -38,7 +38,7 @@
 
                     <div class="mb-3">
                         <label for="menu_title" class="form-label small fw-semibold text-espresso">Menu Title</label>
-                        <input type="text" class="form-control" id="menu_title" name="menu_title" value="<?= e($settings['menu_title']['value'] ?? 'Kaldis Coffee') ?>" required>
+                        <input type="text" class="form-control" id="menu_title" name="menu_title" value="<?= e($settings['menu_title']['value'] ?? 'Trattoria Gusto') ?>" required>
                         <div class="form-text extra-small">Headline shown on top of the customer menu.</div>
                     </div>
 

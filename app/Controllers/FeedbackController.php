@@ -75,8 +75,8 @@ class FeedbackController
             try {
                 $newId = $this->branchRepo->save([
                     'code'      => '4_KILO',
-                    'name'      => 'Kaldis 4 Kilo',
-                    'address'   => '4 Kilo, Near Addis Ababa University, Addis Ababa',
+                    'name'      => 'Trattoria Gusto',
+                    'address'   => 'Addis Ababa, Ethiopia',
                     'phone'     => '+251 111 23 45 67',
                     'is_active' => 1
                 ]);
@@ -91,7 +91,7 @@ class FeedbackController
             $selectedBranch = !empty($branches) ? $branches[0] : [
                 'id'   => 1,
                 'code' => '4_KILO',
-                'name' => 'Kaldis 4 Kilo',
+                'name' => 'Trattoria Gusto',
             ];
         }
 
@@ -104,7 +104,7 @@ class FeedbackController
             'settings'       => $settings,
             'branchCode'     => $selectedBranch['code'] ?? '',
             'tableRef'       => $tableRef,
-            'title'          => 'Customer Feedback — Kaldis Coffee',
+            'title'          => 'Customer Feedback — Trattoria Gusto',
             'csrf_token'     => Csrf::generate(),
             'errors'         => Session::flash('feedback_errors', []),
             'old'            => Session::flash('feedback_old', []),
@@ -217,7 +217,7 @@ class FeedbackController
     {
         $settings = (new SettingsRepository())->getAll();
         View::render('feedback/success', [
-            'title'    => 'Thank You — Kaldis Coffee Feedback',
+            'title'    => 'Thank You — Trattoria Gusto Feedback',
             'settings' => $settings,
         ], 'base');
     }
